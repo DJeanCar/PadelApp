@@ -146,13 +146,10 @@
           <button type="submit" class="btn btn-success btn-lg">¡Todo listo para crear mi cuenta!</button>
         </div>
         <div class="signin-block">
-          <a class="btn btn-block btn-social btn-facebook halfWidth">
+          <a href= "{% url 'social:begin' 'facebook' %}" class="btn btn-block btn-social btn-facebook halfWidth">
             <i class="fa fa-facebook"></i> Crea tu cuenta desde Facebook
           </a>
-          <a class="btn btn-block btn-social btn-twitter halfWidth">
-            <i class="fa fa-twitter"></i> Crea tu cuenta desde Twitter
-          </a>
-          <a class="btn btn-block btn-social btn-google-plus halfWidth">
+          <a href= "{% url 'social:begin' 'google-oauth2' %}" class="btn btn-block btn-social btn-google-plus halfWidth">
             <i class="fa fa-google-plus"></i> Crea tu cuenta desde Google
           </a>
         </div>
