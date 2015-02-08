@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Datos del perfil</title>
+    {% load static from staticfiles %}
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" media="screen">
+    <link href="{% static 'css/application.css' %}" rel="stylesheet" media="screen">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="../../assets/js/html5shiv.js"></script>
+      <script src="../../assets/js/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+
+    <div class="navbar navbar-default" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="EntradaUsuario.html"><h1 class="navbar-brand nomargin">Padeleitor</h1></a>
+        </div>
+        <nav class="navbar-collapse collapse" id="menu">
+          <ul class="nav navbar-nav">
+            <li><a href="#">Torneo Primavera</a></li>
+            <li><a href="#">Padel Fanatic</a></li>
+            <li><a href="#">Liga</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Torneos anteriores <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Torneo 1</a></li>
+                <li><a href="#">Torneo 2</a></li>
+                <li><a href="#">Torneo 3</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Otros...</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Bienvenido {{ user.username }} <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="PerfilEdicion.html"><span class="glyphicon glyphicon-edit"></span> Datos del perfil</a></li>
+                <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-off"></span> Cerrar sesión</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+    <div class="container">
+      <nav class="gap">
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="/datosPerfil" onclick="location='PerfilEdicion.html'" data-target="#datosPerfil" data-toggle="tab">Datos del perfil</a></li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              Jugadores asociados <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              {% for player in players %}
+                <li><a href="/perfil/jugador-asociado/?jugador={{player.id}}">{{ player.first_name }} {{ player.firstSurname }} {{ player.secondSurname }}</a></li>
+              {% endfor %}
+            </ul>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="tab-content smallPreviousGap">
+
+        <section class="tab-pane fade in active" id="datosPerfil">
+          <div class="row">
+            <div class="col-md-10">
+
+              <form id="accountForm" role="form" method="POST" enctype="multipart/form-data">{% csrf_token %}
+                <div class="form-group">
+                  <label for="username">Nombre de usuario <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></label>
+                  <div class="row">
+                    <div class="col-xs-3">
+                      {{ form.username }}
+                      {{ form.username.errors }}
+                      {{ username_error }}
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="profileImg">Sube una foto para tu perfil</label>
+                  <div class="row">
+                    <div class="col-xs-6">
+                      {% if user.avatar %}
+                        <img src="{{MEDIA_URL}}{{user.avatar}}" alt="">
+                      {% endif %}
+                      {{ form.image }}
+                    </div>
+                  </div>
+                </div>
+                <fieldset>
+                  <legend class="legendAsLabel">Nombre y Apellidos <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></legend>
+                  <div class="form-group row">
+                    <div class="col-xs-3">
+                      <label class="sr-only" for="name">Nombre</label>
+                      {{ form.first_name }}
+                      {{ form.first_name.errors }}
+                    </div>
+                    <div class="col-xs-4">
+                      <label class="sr-only" for="firstSurname">Primer Apellido</label>
+                      {{ form.firstSurname }}
+                      {{ form.firstSurname.errors }}
+                    </div>
+                    <div class="col-xs-4">
+                      <label class="sr-only" for="secondSurname">Segundo Apellido</label>
+                      {{ form.secondSurname }}
+                      {{ form.secondSurname.errors }}
+                    </div>
+                  </div>
+                </fieldset>
+                <div class="form-group">
+                  <label for="birthdate">Fecha de nacimiento <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></label>
+                  <div class="row">
+                    <div class="col-xs-3">
+                      {{ form.birth_date }}
+                      {{ form.birth_date.errors }}
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-4">
+                    <div class="form-group">
+                      <label for="email">Correo electrónico <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></label>
+                      {{ form.email }}
+                      {{ form.email.errors }}
+                      {{ email_error }}
+                    </div>
+                  </div>
+                  <div class="col-xs-3">
+                    <div class="form-group">
+                      <label for="phone">Teléfono de contacto <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></label>
+                      {{ form.phone }}
+                      {{ form.phone.errors }}
+                    </div>
+                  </div>
+                </div>
+                <fieldset>
+                  <legend class="legendAsLabel">Cambia tu contraseña</legend>
+                  <div class="form-group row">
+                    {{ form.password.errors }}
+                    <div class="col-xs-3">
+                      <label class="sr-only" for="password">Contraseña</label>
+                      {{ form.password }}
+                    </div>
+                    <div class="col-xs-3">
+                      <label class="sr-only" for="repeatPassword">Repite la contraseña</label>
+                      {{ form.password2 }}
+                    </div>
+                  </div>
+                </fieldset>
+                <div class="form-group">
+                  <label for="language">Idioma de la aplicación</label>
+                  <div class="row">
+                    <div class="col-xs-3">
+                      <select class="form-control" id="language" name="language">
+                        <option value=""></option>
+                        <option value="es">Español</option>
+                        <option value="en">Inglés</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <fieldset>
+                  <legend class="legendAsLabel">Opciones de comunicación</legend>
+                  <p class="help-block noBottomMargin">Elige la información que deseas recibir, tanto de los torneos en que te encuentres apuntado como de nuevos torneos.</p>
+                  <div class="form-group row">
+                    <div class="col-xs-12">
+                      <div class="checkbox">
+                        <label>
+                          {{ form.torneos_participando }}
+                          Información básica de los torneos en que participo
+                        </label>
+                      </div>
+                      <div class="checkbox">
+                        <label>
+                          {{ form.resumen_resultados }}
+                          Resumen con los resultados de cada jornada de los torneos en que participo
+                        </label>
+                      </div>
+                      <div class="checkbox">
+                        <label>
+                          {{ form.nuevos_torneos }}
+                          Información sobre nuevos torneos
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </fieldset>
+                <fieldset>
+                  <legend class="legendAsLabel">Medios de comunicación</legend>
+                  <p class="help-block noBottomMargin">Contactaremos contigo por los canales que prefieras.</p>
+                  <div class="form-group row">
+                    <div class="col-xs-12">
+                      <div class="checkbox">
+                        <label class="checkbox-inline">
+                          {{ form.email_com }}
+                          Email
+                        </label>
+                        <label class="checkbox-inline">
+                          {{ form.sms }}
+                          SMS
+                        </label>
+                        <label class="checkbox-inline">
+                          {{ form.whatsapp}}
+                          Whatsapp
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </fieldset>
+                <div class="text-center previousGap">
+                  <div class="row">
+                    <div class="col-xs-6">
+                      <button type="submit" class="btn btn-success btn-lg">Modificar los datos de mi perfil</button>
+                    </div>
+                    <div class="col-xs-6">
+                      <button type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#deleteAccount">Eliminar mi cuenta</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal fade" id="deleteAccount" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Cerrar</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Eliminación de cuenta</h4>
+                      </div>
+                      <div class="modal-body">
+                        <p>
+                          Acabas de solicitarnos que eliminemos tu cuenta de Padeleitor. Si continúas con este proceso se borrarán todos los datos de
+                          tu cuenta, así como los datos de todos los jugadores que tengas asociados a tu cuenta.
+                        </p>
+                        <p>
+                          ¿Confirmas que deseas realizar esta operación?
+                        </p>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">No, cancela la operación</button>
+                        <button type="button" class="btn btn-danger">Sí, elimina mi cuenta</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+
+            </div>
+          </div>
+        </section>
+
+        <section class="tab-pane fade" id="jugadoresAsociados">
+          Jugadores asociados
+        </section>
+
+      </div>
+    </div>
+
+    <footer>
+      <div class="navbar navbar-inverse corners">
+        <div class="container">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#">&copy; Company 2013</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/application.js' %}"></script>
+    <script src="{% static 'js/jquery.placeholder.js' %}"></script>
+  </body>
+</html>

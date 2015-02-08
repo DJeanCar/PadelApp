@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Bienvenido a Padeleitor</title>
+    {% load static from staticfiles %}
+    <!-- Bootstrap -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" media="screen">
+    <link href="{% static 'css/application.css' %}" rel="stylesheet" media="screen">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="../../assets/js/html5shiv.js"></script>
+      <script src="../../assets/js/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+
+    <div class="navbar navbar-default" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="EntradaUsuario.html"><h1 class="navbar-brand nomargin">Padeleitor</h1></a>
+        </div>
+        <nav class="navbar-collapse collapse" id="menu">
+          <ul class="nav navbar-nav">
+          </ul>
+          {% if user.is_authenticated %} 
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Bienvenido {{ user.username }} <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="{% url 'user_profile' %}"><span class="glyphicon glyphicon-edit"></span> Datos del perfil</a></li>
+                <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-off"></span> Cerrar sesión</a></li>
+              </ul>
+            </li>
+          </ul>
+          {% endif %}
+        </nav>
+      </div>
+    </div>
+
+    <div class="jumbotron customJumbotron">
+      <div class="container">
+        <h1>¡Bienvenido a Padeleitor!</h1>
+        <p>
+          Accede de forma rápida y sencilla a los torneos que gestionas o en los que participas mediante los enlaces
+          que encontrarás justo debajo. Recuerda que, si lo prefieres, dispones de enlaces directos para acceder a estos torneos.
+        </p>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h2 class="panel-title">Gestión de Torneos</h2>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <h3 class="h4">Torneos activos</h3>
+                  <ol class="gap">
+                    <li><a href="DatosTorneo.html">Torneo Primavera</a></li>
+                    <li><a href="DatosTorneo.html">Padel Fanatic</a></li>
+                    <li><a href="DatosTorneo.html">Liga</a></li>
+                  </ol>
+                </div>
+                <div class="col-md-6">
+                  <h3 class="h4">Torneos cerrados</h3>
+                  <ol class="gap">
+                    <li><a href="DatosTorneo.html">Torneo 1</a></li>
+                    <li><a href="DatosTorneo.html">Torneo 2</a></li>
+                    <li><a href="DatosTorneo.html">Torneo 3</a></li>
+                  </ol>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <a class="btn btn-success" href="CreacionTorneo.html" role="button">Crea un nuevo Torneo</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="panel panel-warning">
+            <div class="panel-heading">
+              <h2 class="panel-title">Participación en Torneos</h2>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <h3 class="h4">Torneos en juego</h3>
+                  <ol class="gap">
+                    <li><a href="Clasificacion.html">Torneo Primavera</a></li>
+                    <li><a href="Clasificacion.html">Padel Fanatic</a></li>
+                    <li><a href="Clasificacion.html">Liga</a></li>
+                  </ol>
+                </div>
+                <div class="col-md-6">
+                  <h3 class="h4">Torneos finalizados</h3>
+                  <ol class="gap">
+                    <li><a href="Clasificacion.html">Torneo 1</a></li>
+                    <li><a href="Clasificacion.html">Torneo 2</a></li>
+                    <li><a href="Clasificacion.html">Torneo 3</a></li>
+                  </ol>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <a class="btn btn-success" href="RegistroPareja.html" role="button">Inscríbete a un nuevo Torneo</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="navbar navbar-inverse corners">
+        <div class="container">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#">&copy; Company 2013</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/application.js' %}"></script>
+    <script src="{% static 'js/jquery.placeholder.js' %}"></script>
+  </body>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Nueva cuenta en Padeleitor</title>
+    {% load static from staticfiles %}
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" media="screen">
+    <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet" media="screen">
+    <link href="{% static 'css/bootstrap-social.css' %}" rel="stylesheet" media="screen">
+    <link href="{% static 'css/register.css' %}" rel="stylesheet" media="screen">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="../../assets/js/html5shiv.js"></script>
+      <script src="../../assets/js/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="container">
+      <div class="page-header text-center">
+        <h1>Crea tu cuenta en Padeleitor</h1>
+      </div>
+      <p class="lead lessImportant">
+        ¿Todavía no dispones de una cuenta en Padeleitor? Tan sólo te llevará un momento. Rellena este formulario
+        con tus datos personales y, en cuanto nos lo envíes, podrás apuntarte en los torneos disponibles. Desde
+        tu cuenta podrás acceder a la información actualizada de los torneos en los que te encuentres apuntado.
+      </p>
+      <p class="lead lessImportant">
+        Si lo prefieres puedes utilizar una cuenta tuya en una red social. Accederemos a algunos de tus datos para completar tu perfil.
+      </p>
+
+      <form id="newAccount" role="form" class="gap" method="POST">{% csrf_token %}
+
+        <div class="form-group">
+          <label for="username">Nombre de usuario <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></label>
+          <div class="row">
+            <div class="col-xs-3">
+              {{ form.username }}
+              {{ form.username.errors }}
+            </div>
+          </div>
+        </div>
+        <fieldset>
+          <legend class="legendAsLabel">Nombre y Apellidos <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></legend>
+          <div class="form-group row">
+            <div class="col-xs-3">
+              <label class="sr-only" for="name">Nombre</label>
+              {{ form.first_name }}
+              {{ form.first_name.errors }}
+            </div>
+            <div class="col-xs-4">
+              <label class="sr-only" for="firstSurname">Primer Apellido</label>
+              {{ form.firstSurname }}
+              {{ form.firstSurname.errors }}
+            </div>
+            <div class="col-xs-4">
+              <label class="sr-only" for="secondSurname">Segundo Apellido</label>
+              {{ form.secondSurname }}
+              {{ form.secondSurname.errors }}
+            </div>
+          </div>
+        </fieldset>
+        <div class="form-group">
+          <label for="birthdate">Fecha de nacimiento <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></label>
+          <div class="row">
+            <div class="col-xs-3">
+              {{ form.birth_date }}
+              {{ form.birth_date.errors }}
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-4">
+            <div class="form-group">
+              <label for="email">Correo electrónico <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></label>
+              {{ form.email }}
+              {{ form.email.errors }}
+            </div>
+          </div>
+          <div class="col-xs-4">
+            <div class="form-group">
+              <label for="phone">Teléfono de contacto <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></label>
+              {{ form.phone }}
+              {{ form.phone.errors }}
+            </div>
+          </div>
+        </div>
+        <fieldset>
+          <legend class="legendAsLabel">Contraseña <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></legend>
+          <div class="form-group row">
+            {{ form.password.errors }}
+            <div class="col-xs-3">
+              <label class="sr-only" for="password">Contraseña</label>
+              {{ form.password }}
+            </div>
+            <div class="col-xs-3">
+              <label class="sr-only" for="repeatPassword">Repite la contraseña</label>
+              {{ form.password2 }}
+            </div>
+          </div>
+        </fieldset>
+        <div class="checkbox">
+          <label>
+            {{ form.cond }}He leído y acepto <a href="#" data-toggle="modal" data-target="#conditions">los términos y condiciones de uso</a> <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span>
+          </label>
+          {{ form.cond.errors }}
+        </div>
+        <div class="checkbox">
+          <label>
+            {{ form.notifications }}Deseo recibir información sobre los torneos en que participo y futuros torneos que se puedan organizar (posteriormente, desde tu perfil, podrás modificar y configurar más en detalle la recepción de comunicaciones)
+          </label>
+        </div>
+        <div class="modal fade" id="conditions" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="modalTitle">Términos y condiciones de uso</h4>
+              </div>
+              <div class="modal-body">
+                <p>
+                  De acuerdo con lo establecido por la Ley Org&aacute;nica 15/1999, de 13 de diciembre, de Protecci&oacute;n de Datos de Car&aacute;cter Personal, Vd. consiente que sus datos facilitados, presentes y futuros, sean incorporados a los ficheros cuyo responsable es Ligadosalpadel.com con la finalidad de poder gestionar su relaci&oacute;n con los mismos.
+                </p>
+                <p>
+                  Asimismo, consiente el env&iacute;o de las comunicaciones incluidas las electr&oacute;nicas, a&uacute;n por medios electr&oacute;nicos. Consiente de la cesi&oacute;n de sus datos a: Organismos Deportivos Oficiales, empresa de seguros, &aacute;rbitros y a organizadores y patrocinadores de la liga.
+                </p>
+                <p>
+                  Asimismo le informamos que algunos de sus datos podr&aacute;n ser incorporados a la p&aacute;gina web <a href="http://www.ligadosalpadel.com" target="_blank">www.ligadosalpadel.com</a> con relaci&oacute;n a su participaci&oacute;n en competiciones o su inclusi&oacute;n en las distintas clasificaciones o rankings.
+                </p>
+                <p>
+                  Puede Vd. ejercer sus derechos de acceso, rectificaci&oacute;n, cancelaci&oacute;n y oposici&oacute;n respecto de sus datos enviando una solicitud por escrito, a la direcci&oacute;n electr&oacute;nica <a href="mailto:info@ligadosalpadel.com">info@ligadosalpadel.com</a>
+                </p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="text-center previousGap">
+          <button type="submit" class="btn btn-success btn-lg">¡Todo listo para crear mi cuenta!</button>
+        </div>
+        <div class="signin-block">
+          <a class="btn btn-block btn-social btn-facebook halfWidth">
+            <i class="fa fa-facebook"></i> Crea tu cuenta desde Facebook
+          </a>
+          <a class="btn btn-block btn-social btn-twitter halfWidth">
+            <i class="fa fa-twitter"></i> Crea tu cuenta desde Twitter
+          </a>
+          <a class="btn btn-block btn-social btn-google-plus halfWidth">
+            <i class="fa fa-google-plus"></i> Crea tu cuenta desde Google
+          </a>
+        </div>
+      </form>
+
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/register.js"></script>
+    <script src="js/jquery.placeholder.js"></script>
+  </body>
+</html>

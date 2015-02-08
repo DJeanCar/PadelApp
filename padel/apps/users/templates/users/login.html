@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Identificación</title>
+	{% load static from staticfiles %}
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" media="screen">
+    <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet" media="screen">
+    <link href="{% static 'css/bootstrap-social.css' %}" rel="stylesheet" media="screen">
+    <link href="{% static 'css/login.css' %}" rel="stylesheet" media="screen">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="../../assets/js/html5shiv.js"></script>
+      <script src="../../assets/js/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="container">
+      <div class="signin">
+        <h1 class="h3 signin-heading text-center">Padeleitor</h1>
+
+        <div id="signin" class="collapse in">
+          <form id="signinForm" role="form" method="POST">{% csrf_token %}
+            <h2 class="h4 signin-heading text-center">Entra en tu cuenta</h2>
+            {{ form.email }}
+            {{ form.password }}
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" value="remember-me"> Recordarme en este ordenador
+              </label>
+            </div>
+            <button class="btn btn-lg btn-success btn-block" type="submit">Iniciar sesión</button>
+          </form>
+
+          <div class="signin-block">
+            <a href="{% url 'social:begin' 'facebook' %}" class="btn btn-block btn-social btn-facebook">
+              <i class="fa fa-facebook"></i> Entrar con Facebook
+            </a>
+            <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-block btn-social btn-google-plus">
+              <i class="fa fa-google-plus"></i> Entrar con Google
+            </a>
+          </div>
+
+          <div class="signin-block">
+            <p>
+              <a href="#remember" data-toggle="collapse">¿Olvidaste tu contraseña?</a>
+            </p>
+            <p>
+              <a href="{% url 'register_user' %}">¿No tienes cuenta todavía?</a>
+            </p>
+          </div>
+        </div>
+
+        <div id="remember" class="collapse">
+          <form id="rememberForm" role="form">
+            <h2 class="h4 signin-heading text-center">Generar una contraseña nueva</h2>
+            <input type="text" class="form-control" placeholder="Email" required>
+            <p class="help-block">Si olvidaste tu contraseña, rellena este formulario para que te enviemos una nueva contraseña a tu cuenta de correo electrónico. Te aconsejamos que la cambies en cuanto la recibas.</p>
+            <button class="btn btn-lg btn-success btn-block" type="submit">Nueva contraseña</button>
+          </form>
+
+          <div class="signin-block">
+            <p>
+              <a href="#signin" data-toggle="collapse">Ya tengo un usuario</a>
+            </p>
+            <p>
+              <a href="{% url 'register_user' %}">¿No tienes cuenta todavía?</a>
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/login.js"></script>
+    <script src="js/jquery.placeholder.js"></script>
+  </body>
+</html>
