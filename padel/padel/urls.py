@@ -5,6 +5,7 @@ from django.conf import settings
 urlpatterns = patterns('',
 
 	url(r'^', include('apps.users.urls')),
+	url(r'^', include('apps.torneos.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
 

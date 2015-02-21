@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Creación de un torneo</title>
+    {% load static from staticfiles %}
+    <!-- Bootstrap -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" media="screen">
+    <link href="{% static 'css/application.css' %}" rel="stylesheet" media="screen">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="../../assets/js/html5shiv.js"></script>
+      <script src="../../assets/js/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+
+    <div class="navbar navbar-default" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="EntradaUsuario.html"><h1 class="navbar-brand nomargin">Padeleitor</h1></a>
+        </div>
+        <nav class="navbar-collapse collapse" id="menu">
+          <ul class="nav navbar-nav">
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Bienvenido Perico Pérez <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="PerfilEdicion.html"><span class="glyphicon glyphicon-edit"></span> Datos del perfil</a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-off"></span> Cerrar sesión</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h2 class="panel-title">Creación de un torneo</h2>
+            </div>
+            <div class="panel-body">
+              <form id="createTournament" role="form">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <div class="form-group">
+                      <label for="name">Nombre <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></label>
+                      <input type="text" class="form-control" id="name" name="name" maxlength="" placeholder="Nombre del torneo" required>
+                    </div>
+                  </div>
+                  <div class="col-xs-4">
+                    <div class="form-group">
+                      <label for="url">URL corta <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></label>
+                      <input type="text" class="form-control" id="url" name="url" maxlength="" placeholder="URL corta" required>
+                    </div>
+                  </div>
+                </div>
+                <div class="panel panel-primary">
+                  <div class="panel-body">
+                    <div class="row">
+                      <div class="col-xs-4">
+                        <div class="form-group">
+                          <label for="tournamentType">Tipo de torneo <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></label>
+                          <select class="form-control" id="tournamentType" name="tournamentType" required>
+                            <option value=""></option>
+                            <option value="liga">Liga</option>
+                            <option value="fanatic">Fanatic</option>
+                            <option value="yosolo">YoSolo</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-xs-8">
+                        <div id="ligaExplain" class="media hidden">
+                          <img class="pull-left img-rounded" alt="Logo para la Liga" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACDUlEQVR4Xu2Yz6/BQBDHpxoEcfTjVBVx4yjEv+/EQdwa14pTE04OBO+92WSavqoXOuFp+u1JY3d29rvfmQ9r7Xa7L8rxY0EAOAAlgB6Q4x5IaIKgACgACoACoECOFQAGgUFgEBgEBnMMAfwZAgaBQWAQGAQGgcEcK6DG4Pl8ptlsRpfLxcjYarVoOBz+knSz2dB6vU78Lkn7V8S8d8YqAa7XK83ncyoUCjQej2m5XNIPVmkwGFC73TZrypjD4fCQAK+I+ZfBVQLwZlerFXU6Her1eonreJ5HQRAQn2qj0TDukHm1Ws0Ix2O2260RrlQqpYqZtopVAoi1y+UyHY9Hk0O32w3FkI06jkO+74cC8Dh2y36/p8lkQovFgqrVqhFDEzONCCoB5OSk7qMl0Gw2w/Lo9/vmVMUBnGi0zi3Loul0SpVKJXRDmphvF0BOS049+n46nW5sHRVAXMAuiTZObcxnRVA5IN4DJHnXdU3dc+OLP/V63Vhd5haLRVM+0jg1MZ/dPI9XCZDUsbmuxc6SkGxKHCDzGJ2j0cj0A/7Mwti2fUOWR2Km2bxagHgt83sUgfcEkN4RLx0phfjvgEdi/psAaRf+lHmqEviUTWjygAC4EcKNEG6EcCOk6aJZnwsKgAKgACgACmS9k2vyBwVAAVAAFAAFNF0063NBAVAAFAAFQIGsd3JN/qBA3inwDTUHcp+19ttaAAAAAElFTkSuQmCC">
+                          <div id="media-body">
+                            <h4 class="media-heading">Liga</h4>
+                            <p>La Liga es un torneo en el que ...</p>
+                          </div>
+                        </div>
+                        <div id="fanaticExplain" class="media hidden">
+                          <img class="pull-left img-circle" alt="Logo para Padel Fanatic" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACDUlEQVR4Xu2Yz6/BQBDHpxoEcfTjVBVx4yjEv+/EQdwa14pTE04OBO+92WSavqoXOuFp+u1JY3d29rvfmQ9r7Xa7L8rxY0EAOAAlgB6Q4x5IaIKgACgACoACoECOFQAGgUFgEBgEBnMMAfwZAgaBQWAQGAQGgcEcK6DG4Pl8ptlsRpfLxcjYarVoOBz+knSz2dB6vU78Lkn7V8S8d8YqAa7XK83ncyoUCjQej2m5XNIPVmkwGFC73TZrypjD4fCQAK+I+ZfBVQLwZlerFXU6Her1eonreJ5HQRAQn2qj0TDukHm1Ws0Ix2O2260RrlQqpYqZtopVAoi1y+UyHY9Hk0O32w3FkI06jkO+74cC8Dh2y36/p8lkQovFgqrVqhFDEzONCCoB5OSk7qMl0Gw2w/Lo9/vmVMUBnGi0zi3Loul0SpVKJXRDmphvF0BOS049+n46nW5sHRVAXMAuiTZObcxnRVA5IN4DJHnXdU3dc+OLP/V63Vhd5haLRVM+0jg1MZ/dPI9XCZDUsbmuxc6SkGxKHCDzGJ2j0cj0A/7Mwti2fUOWR2Km2bxagHgt83sUgfcEkN4RLx0phfjvgEdi/psAaRf+lHmqEviUTWjygAC4EcKNEG6EcCOk6aJZnwsKgAKgACgACmS9k2vyBwVAAVAAFAAFNF0063NBAVAAFAAFQIGsd3JN/qBA3inwDTUHcp+19ttaAAAAAElFTkSuQmCC">
+                          <div id="media-body">
+                            <h4 class="media-heading">Padel Fanatic</h4>
+                            <p>Padel Fanatic es un torneo en el que ...</p>
+                          </div>
+                        </div>
+                        <div id="yosoloExplain" class="media hidden">
+                          <img class="pull-left img-thumbnail" alt="Logo para la Liga YoSolo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACDUlEQVR4Xu2Yz6/BQBDHpxoEcfTjVBVx4yjEv+/EQdwa14pTE04OBO+92WSavqoXOuFp+u1JY3d29rvfmQ9r7Xa7L8rxY0EAOAAlgB6Q4x5IaIKgACgACoACoECOFQAGgUFgEBgEBnMMAfwZAgaBQWAQGAQGgcEcK6DG4Pl8ptlsRpfLxcjYarVoOBz+knSz2dB6vU78Lkn7V8S8d8YqAa7XK83ncyoUCjQej2m5XNIPVmkwGFC73TZrypjD4fCQAK+I+ZfBVQLwZlerFXU6Her1eonreJ5HQRAQn2qj0TDukHm1Ws0Ix2O2260RrlQqpYqZtopVAoi1y+UyHY9Hk0O32w3FkI06jkO+74cC8Dh2y36/p8lkQovFgqrVqhFDEzONCCoB5OSk7qMl0Gw2w/Lo9/vmVMUBnGi0zi3Loul0SpVKJXRDmphvF0BOS049+n46nW5sHRVAXMAuiTZObcxnRVA5IN4DJHnXdU3dc+OLP/V63Vhd5haLRVM+0jg1MZ/dPI9XCZDUsbmuxc6SkGxKHCDzGJ2j0cj0A/7Mwti2fUOWR2Km2bxagHgt83sUgfcEkN4RLx0phfjvgEdi/psAaRf+lHmqEviUTWjygAC4EcKNEG6EcCOk6aJZnwsKgAKgACgACmS9k2vyBwVAAVAAFAAFNF0063NBAVAAFAAFQIGsd3JN/qBA3inwDTUHcp+19ttaAAAAAElFTkSuQmCC">
+                          <div id="media-body">
+                            <h4 class="media-heading">Liga YoSolo</h4>
+                            <p>La Liga YoSolo es un torneo en el que ...</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div id="ligaFields" class="collapse">
+                      <div class="row">
+                        <div class="col-xs-4">
+                          <div class="form-group">
+                            <label for="price">Precio <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></label>
+                            <div class="input-group">
+                              <input type="number" class="form-control" id="price" name="price" pattern="[0-9]+([\.|,][0-9]+)?" step="0.01" maxlength="" placeholder="Precio" required>
+                              <span class="input-group-addon">&euro;</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-xs-4">
+                          <div class="form-group">
+                            <label for="initDate">Fecha de inicio <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></label>
+                            <input type="date" class="form-control" id="initDate" name="initDate" placeholder="dd/mm/aaaa" required>
+                          </div>
+                        </div>
+                        <div class="col-xs-4">
+                          <div class="form-group">
+                            <label for="endDate">Fecha de finalización <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></label>
+                            <input type="date" class="form-control" id="endDate" name="endDate" placeholder="dd/mm/aaaa" required>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-xs-4">
+                          <div class="form-group">
+                            <label for="courts">Número de pistas</label>
+                            <div class="row">
+                              <div class="col-xs-5">
+                                <input type="number" class="form-control" id="courts" name="courts" maxlength="" required>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-xs-4">
+                          <div class="form-group">
+                            <label for="players">Máximo de jugadores</label>
+                            <div class="row">
+                              <div class="col-xs-5">
+                                <input type="number" class="form-control" id="players" name="players" maxlength=""required>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div id="fanaticFields" class="collapse">
+                      <div class="row">
+                        <div class="col-xs-4">
+                          <div class="form-group">
+                            <label for="price">Precio <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></label>
+                            <div class="input-group">
+                              <input type="number" class="form-control" id="price" name="price" pattern="[0-9]+([\.|,][0-9]+)?" step="0.01" maxlength="" placeholder="Precio" required>
+                              <span class="input-group-addon">&euro;</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-xs-4">
+                          <div class="form-group">
+                            <label for="initDate">Fecha de inicio <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></label>
+                            <input type="date" class="form-control" id="initDate" name="initDate" placeholder="dd/mm/aaaa" required>
+                          </div>
+                        </div>
+                        <div class="col-xs-4">
+                          <div class="form-group">
+                            <label for="endDate">Fecha de finalización <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></label>
+                            <input type="date" class="form-control" id="endDate" name="endDate" placeholder="dd/mm/aaaa" required>
+                          </div>
+                        </div>
+                      </div>
+                      <p class="help-block">...</p>
+                    </div>
+                    <div id="yosoloFields" class="collapse">
+                      <div class="row">
+                        <div class="col-xs-4">
+                          <div class="form-group">
+                            <label for="price">Precio <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></label>
+                            <div class="input-group">
+                              <input type="number" class="form-control" id="price" name="price" pattern="[0-9]+([\.|,][0-9]+)?" step="0.01" maxlength="" placeholder="Precio" required>
+                              <span class="input-group-addon">&euro;</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-xs-4">
+                          <div class="form-group">
+                            <label for="initDate">Fecha de inicio <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></label>
+                            <input type="date" class="form-control" id="initDate" name="initDate" placeholder="dd/mm/aaaa" required>
+                          </div>
+                        </div>
+                        <div class="col-xs-4">
+                          <div class="form-group">
+                            <label for="endDate">Fecha de finalización <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></label>
+                            <input type="date" class="form-control" id="endDate" name="endDate" placeholder="dd/mm/aaaa" required>
+                          </div>
+                        </div>
+                      </div>
+                      <p class="help-block">...</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-6">
+                    <div class="panel panel-primary">
+                      <div class="panel-body">
+                        <div class="row">
+                          <div class="col-xs-7">
+                            <div id="fixedCategoryClassification" class="collapse in">
+                              <div class="form-group">
+                                <label for="categoryClassification">Clasificación de categorías <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></label>
+                                <select class="form-control" id="categoryClassification" name="categoryClassification">
+                                  <option value=""></option>
+                                  <option value="1">Masculina/Femenina/Mixta</option>
+                                  <option value="2">Masculina/Femenina</option>
+                                  <option value="3">Profesional/Amateur</option>
+                                  <option value="4">Infantil/Juvenil</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div id="newCategoryClassification" class="collapse">
+                              <fieldset id="categoryGroup">
+                                <legend class="legendAsLabel">Clasificación de categorías personalizada <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></legend>
+                                <div class="form-group">
+                                  <label class="sr-only" for="categoryClassificationName">Nombre de la clasificación de categorías</label>
+                                  <input type="text" class="form-control" id="categoryClassificationName" name="categoryClassificationName" maxlength="" placeholder="Nombre de la clasificación" required>
+                                </div>
+                                <div id="category_1" class="form-group">
+                                  <label class="sr-only" for="categoryName_1">Nombre de la categoría</label>
+                                  <div class="input-group">
+                                    <input type="text" class="form-control" id="categoryName_1" name="categoryName_1" maxlength="" placeholder="Nombre" required>
+                                    <span class="input-group-btn">
+                                      <button id="categoryButton_1" class="btn btn-default" type="button" onclick="addOneElement('category',2);">
+                                        <span class="glyphicon glyphicon-plus text-success"></span>
+                                      </button>
+                                    </span>
+                                  </div>
+                                </div>
+                              </fieldset>
+                            </div>
+                          </div>
+                          <div class="col-xs-5">
+                            <button type="button" class="btn btn-info multipleLines previousMargin" id="newCategoryClassificationButton">Quiero mi propia clasificación de categorías</button>
+                          </div>
+                        </div>
+                        <p class="help-block">Una vez que hayas indicado las categorías podrás crear las divisiones o dejarlo para más adelante, durante el período de inscripción.</p>
+                        <div class="row">
+                          <div class="col-xs-6">
+                            <button type="button" class="btn btn-info" id="createDivisionsButton" aria-expanded="false" aria-controls="divisions" onclick="createDivisions();">Deseo crear ahora las divisiones</button>
+                          </div>
+                        </div>
+                        <div id="divisions" class="collapse previousGap">
+                          <table id="categoriesTable" class="table table-bordered noBottomMargin">
+                            <thead>
+                              <tr class="active">
+                                <th class="text-center">Categorías</th>
+                                <th class="text-center">Divisiones</th>
+                              </tr>
+                            <thead>
+                            <tbody id="categoriesTableBody">
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-6">
+                    <div class="panel panel-primary">
+                      <div class="panel-body">
+                        <div class="row">
+                          <div class="col-xs-7">
+                            <div id="fixedLevelClassification" class="collapse in">
+                              <div class="form-group">
+                                <label for="levelClassification">Clasificación de niveles</label>
+                                <select class="form-control" id="levelClassification" name="levelClassification">
+                                  <option value=""></option>
+                                  <option value="1">Alto/Medio/Bajo</option>
+                                  <option value="2">Avanzado/Medio/Iniciación</option>
+                                  <option value="3">6/5/4/3/2/1</option>
+                                  <option value="4">Profesional/Amateur/Aficionado</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div id="newLevelClassification" class="collapse">
+                              <fieldset id="levelGroup">
+                                <legend class="legendAsLabel">Clasificación de niveles personalizada</legend>
+                                <div class="form-group">
+                                  <label class="sr-only" for="levelClassificationName">Nombre de la clasificación de niveles</label>
+                                  <input type="text" class="form-control" id="levelClassificationName" name="levelClassificationName" maxlength="" placeholder="Nombre de la clasificación">
+                                </div>
+                                <div id="level_1" class="form-group">
+                                  <label class="sr-only" for="levelName_1">Nombre del nivel</label>
+                                  <div class="input-group">
+                                    <input type="text" class="form-control" id="levelName_1" name="levelName_1" maxlength="" placeholder="Nombre" required>
+                                    <span class="input-group-btn">
+                                      <button id="levelButton_1" class="btn btn-default" type="button" onclick="addOneElement('level',2);">
+                                        <span class="glyphicon glyphicon-plus text-success"></span>
+                                      </button>
+                                    </span>
+                                  </div>
+                                </div>
+                              </fieldset>
+                            </div>
+                          </div>
+                          <div class="col-xs-5">
+                            <button type="button" class="btn btn-info multipleLines previousMargin" id="newLevelClassificationButton">Quiero mi propia clasificación de niveles</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" id="includeLevel" name="includeLevel" value="yes">Los jugadores deben seleccionar su <strong>nivel</strong> en la inscripción
+                  </label>
+                </div>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" id="includeDivision" name="includeDivision" value="yes">Los jugadores deben seleccionar la <strong>división</strong> en la inscripción
+                  </label>
+                </div>
+                <div class="text-center previousGap">
+                  <button type="submit" class="btn btn-success btn-lg">Crear el torneo</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="navbar navbar-inverse corners">
+        <div class="container">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#">&copy; Company 2013</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/application.js' %}"></script>
+    <script src="{% static 'js/jquery.placeholder.js' %}"></script>
+  </body>
+</html>
