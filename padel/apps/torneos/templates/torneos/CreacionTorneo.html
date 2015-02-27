@@ -35,10 +35,10 @@
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Bienvenido Perico Pérez <span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Bienvenido {{ user.username }} <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="PerfilEdicion.html"><span class="glyphicon glyphicon-edit"></span> Datos del perfil</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-off"></span> Cerrar sesión</a></li>
+                <li><a href="{% url 'user_profile' %}"><span class="glyphicon glyphicon-edit"></span> Datos del perfil</a></li>
+                <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-off"></span> Cerrar sesión</a></li>
               </ul>
             </li>
           </ul>
@@ -54,18 +54,20 @@
               <h2 class="panel-title">Creación de un torneo</h2>
             </div>
             <div class="panel-body">
-              <form id="createTournament" role="form">
+              <form id="createTournament" role="form" method="POST" enctype="multipart/form-data">{% csrf_token %}
                 <div class="row">
                   <div class="col-xs-4">
                     <div class="form-group">
                       <label for="name">Nombre <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></label>
-                      <input type="text" class="form-control" id="name" name="name" maxlength="" placeholder="Nombre del torneo" required>
+                      {{ form.name }}
+                      {{ form.name.errors }}
                     </div>
                   </div>
                   <div class="col-xs-4">
                     <div class="form-group">
                       <label for="url">URL corta <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></label>
-                      <input type="text" class="form-control" id="url" name="url" maxlength="" placeholder="URL corta" required>
+                      {{ form.urlTag }}
+                      {{ form.urlTag.errors }}
                     </div>
                   </div>
                 </div>
@@ -75,17 +77,14 @@
                       <div class="col-xs-4">
                         <div class="form-group">
                           <label for="tournamentType">Tipo de torneo <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></label>
-                          <select class="form-control" id="tournamentType" name="tournamentType" required>
-                            <option value=""></option>
-                            <option value="liga">Liga</option>
-                            <option value="fanatic">Fanatic</option>
-                            <option value="yosolo">YoSolo</option>
-                          </select>
+                          {{ form.tournamentType }}
+                          {{ form.tournamentType.errors }}
                         </div>
                       </div>
                       <div class="col-xs-8">
                         <div id="ligaExplain" class="media hidden">
                           <img class="pull-left img-rounded" alt="Logo para la Liga" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACDUlEQVR4Xu2Yz6/BQBDHpxoEcfTjVBVx4yjEv+/EQdwa14pTE04OBO+92WSavqoXOuFp+u1JY3d29rvfmQ9r7Xa7L8rxY0EAOAAlgB6Q4x5IaIKgACgACoACoECOFQAGgUFgEBgEBnMMAfwZAgaBQWAQGAQGgcEcK6DG4Pl8ptlsRpfLxcjYarVoOBz+knSz2dB6vU78Lkn7V8S8d8YqAa7XK83ncyoUCjQej2m5XNIPVmkwGFC73TZrypjD4fCQAK+I+ZfBVQLwZlerFXU6Her1eonreJ5HQRAQn2qj0TDukHm1Ws0Ix2O2260RrlQqpYqZtopVAoi1y+UyHY9Hk0O32w3FkI06jkO+74cC8Dh2y36/p8lkQovFgqrVqhFDEzONCCoB5OSk7qMl0Gw2w/Lo9/vmVMUBnGi0zi3Loul0SpVKJXRDmphvF0BOS049+n46nW5sHRVAXMAuiTZObcxnRVA5IN4DJHnXdU3dc+OLP/V63Vhd5haLRVM+0jg1MZ/dPI9XCZDUsbmuxc6SkGxKHCDzGJ2j0cj0A/7Mwti2fUOWR2Km2bxagHgt83sUgfcEkN4RLx0phfjvgEdi/psAaRf+lHmqEviUTWjygAC4EcKNEG6EcCOk6aJZnwsKgAKgACgACmS9k2vyBwVAAVAAFAAFNF0063NBAVAAFAAFQIGsd3JN/qBA3inwDTUHcp+19ttaAAAAAElFTkSuQmCC">
+                          {{ form.logo }}
                           <div id="media-body">
                             <h4 class="media-heading">Liga</h4>
                             <p>La Liga es un torneo en el que ...</p>
@@ -93,6 +92,7 @@
                         </div>
                         <div id="fanaticExplain" class="media hidden">
                           <img class="pull-left img-circle" alt="Logo para Padel Fanatic" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACDUlEQVR4Xu2Yz6/BQBDHpxoEcfTjVBVx4yjEv+/EQdwa14pTE04OBO+92WSavqoXOuFp+u1JY3d29rvfmQ9r7Xa7L8rxY0EAOAAlgB6Q4x5IaIKgACgACoACoECOFQAGgUFgEBgEBnMMAfwZAgaBQWAQGAQGgcEcK6DG4Pl8ptlsRpfLxcjYarVoOBz+knSz2dB6vU78Lkn7V8S8d8YqAa7XK83ncyoUCjQej2m5XNIPVmkwGFC73TZrypjD4fCQAK+I+ZfBVQLwZlerFXU6Her1eonreJ5HQRAQn2qj0TDukHm1Ws0Ix2O2260RrlQqpYqZtopVAoi1y+UyHY9Hk0O32w3FkI06jkO+74cC8Dh2y36/p8lkQovFgqrVqhFDEzONCCoB5OSk7qMl0Gw2w/Lo9/vmVMUBnGi0zi3Loul0SpVKJXRDmphvF0BOS049+n46nW5sHRVAXMAuiTZObcxnRVA5IN4DJHnXdU3dc+OLP/V63Vhd5haLRVM+0jg1MZ/dPI9XCZDUsbmuxc6SkGxKHCDzGJ2j0cj0A/7Mwti2fUOWR2Km2bxagHgt83sUgfcEkN4RLx0phfjvgEdi/psAaRf+lHmqEviUTWjygAC4EcKNEG6EcCOk6aJZnwsKgAKgACgACmS9k2vyBwVAAVAAFAAFNF0063NBAVAAFAAFQIGsd3JN/qBA3inwDTUHcp+19ttaAAAAAElFTkSuQmCC">
+                          
                           <div id="media-body">
                             <h4 class="media-heading">Padel Fanatic</h4>
                             <p>Padel Fanatic es un torneo en el que ...</p>
@@ -100,6 +100,7 @@
                         </div>
                         <div id="yosoloExplain" class="media hidden">
                           <img class="pull-left img-thumbnail" alt="Logo para la Liga YoSolo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACDUlEQVR4Xu2Yz6/BQBDHpxoEcfTjVBVx4yjEv+/EQdwa14pTE04OBO+92WSavqoXOuFp+u1JY3d29rvfmQ9r7Xa7L8rxY0EAOAAlgB6Q4x5IaIKgACgACoACoECOFQAGgUFgEBgEBnMMAfwZAgaBQWAQGAQGgcEcK6DG4Pl8ptlsRpfLxcjYarVoOBz+knSz2dB6vU78Lkn7V8S8d8YqAa7XK83ncyoUCjQej2m5XNIPVmkwGFC73TZrypjD4fCQAK+I+ZfBVQLwZlerFXU6Her1eonreJ5HQRAQn2qj0TDukHm1Ws0Ix2O2260RrlQqpYqZtopVAoi1y+UyHY9Hk0O32w3FkI06jkO+74cC8Dh2y36/p8lkQovFgqrVqhFDEzONCCoB5OSk7qMl0Gw2w/Lo9/vmVMUBnGi0zi3Loul0SpVKJXRDmphvF0BOS049+n46nW5sHRVAXMAuiTZObcxnRVA5IN4DJHnXdU3dc+OLP/V63Vhd5haLRVM+0jg1MZ/dPI9XCZDUsbmuxc6SkGxKHCDzGJ2j0cj0A/7Mwti2fUOWR2Km2bxagHgt83sUgfcEkN4RLx0phfjvgEdi/psAaRf+lHmqEviUTWjygAC4EcKNEG6EcCOk6aJZnwsKgAKgACgACmS9k2vyBwVAAVAAFAAFNF0063NBAVAAFAAFQIGsd3JN/qBA3inwDTUHcp+19ttaAAAAAElFTkSuQmCC">
+                          
                           <div id="media-body">
                             <h4 class="media-heading">Liga YoSolo</h4>
                             <p>La Liga YoSolo es un torneo en el que ...</p>
@@ -112,8 +113,10 @@
                         <div class="col-xs-4">
                           <div class="form-group">
                             <label for="price">Precio <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></label>
+
+                            {{ form.price.errors }}
                             <div class="input-group">
-                              <input type="number" class="form-control" id="price" name="price" pattern="[0-9]+([\.|,][0-9]+)?" step="0.01" maxlength="" placeholder="Precio" required>
+                              {{ form.price }}
                               <span class="input-group-addon">&euro;</span>
                             </div>
                           </div>
@@ -121,13 +124,15 @@
                         <div class="col-xs-4">
                           <div class="form-group">
                             <label for="initDate">Fecha de inicio <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></label>
-                            <input type="date" class="form-control" id="initDate" name="initDate" placeholder="dd/mm/aaaa" required>
+                            {{ form.fecha_inicio.errors }}
+                            {{ form.fecha_inicio }}
                           </div>
                         </div>
                         <div class="col-xs-4">
                           <div class="form-group">
                             <label for="endDate">Fecha de finalización <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></label>
-                            <input type="date" class="form-control" id="endDate" name="endDate" placeholder="dd/mm/aaaa" required>
+                            {{ form.fecha_fin.errors }}
+                            {{ form.fecha_fin }}
                           </div>
                         </div>
                       </div>
@@ -137,7 +142,8 @@
                             <label for="courts">Número de pistas</label>
                             <div class="row">
                               <div class="col-xs-5">
-                                <input type="number" class="form-control" id="courts" name="courts" maxlength="" required>
+                                {{ form.max_jugadores }}
+                                {{ form.max_jugadores.errors }}
                               </div>
                             </div>
                           </div>
@@ -147,7 +153,8 @@
                             <label for="players">Máximo de jugadores</label>
                             <div class="row">
                               <div class="col-xs-5">
-                                <input type="number" class="form-control" id="players" name="players" maxlength=""required>
+                                {{ form.num_pistas }}
+                                {{ form.num_pistas.errors }}
                               </div>
                             </div>
                           </div>
@@ -159,8 +166,9 @@
                         <div class="col-xs-4">
                           <div class="form-group">
                             <label for="price">Precio <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></label>
+                            
                             <div class="input-group">
-                              <input type="number" class="form-control" id="price" name="price" pattern="[0-9]+([\.|,][0-9]+)?" step="0.01" maxlength="" placeholder="Precio" required>
+                              
                               <span class="input-group-addon">&euro;</span>
                             </div>
                           </div>
@@ -168,13 +176,13 @@
                         <div class="col-xs-4">
                           <div class="form-group">
                             <label for="initDate">Fecha de inicio <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></label>
-                            <input type="date" class="form-control" id="initDate" name="initDate" placeholder="dd/mm/aaaa" required>
+                            
                           </div>
                         </div>
                         <div class="col-xs-4">
                           <div class="form-group">
                             <label for="endDate">Fecha de finalización <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></label>
-                            <input type="date" class="form-control" id="endDate" name="endDate" placeholder="dd/mm/aaaa" required>
+                            
                           </div>
                         </div>
                       </div>
@@ -185,8 +193,9 @@
                         <div class="col-xs-4">
                           <div class="form-group">
                             <label for="price">Precio <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></label>
+                            
                             <div class="input-group">
-                              <input type="number" class="form-control" id="price" name="price" pattern="[0-9]+([\.|,][0-9]+)?" step="0.01" maxlength="" placeholder="Precio" required>
+                              
                               <span class="input-group-addon">&euro;</span>
                             </div>
                           </div>
@@ -194,13 +203,13 @@
                         <div class="col-xs-4">
                           <div class="form-group">
                             <label for="initDate">Fecha de inicio <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></label>
-                            <input type="date" class="form-control" id="initDate" name="initDate" placeholder="dd/mm/aaaa" required>
+                            
                           </div>
                         </div>
                         <div class="col-xs-4">
                           <div class="form-group">
                             <label for="endDate">Fecha de finalización <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></label>
-                            <input type="date" class="form-control" id="endDate" name="endDate" placeholder="dd/mm/aaaa" required>
+                            
                           </div>
                         </div>
                       </div>
@@ -231,12 +240,12 @@
                                 <legend class="legendAsLabel">Clasificación de categorías personalizada <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></legend>
                                 <div class="form-group">
                                   <label class="sr-only" for="categoryClassificationName">Nombre de la clasificación de categorías</label>
-                                  <input type="text" class="form-control" id="categoryClassificationName" name="categoryClassificationName" maxlength="" placeholder="Nombre de la clasificación" required>
+                                  <input type="text" class="form-control" id="categoryClassificationName" name="categoryClassificationName" maxlength="" placeholder="Nombre de la clasificación" >
                                 </div>
                                 <div id="category_1" class="form-group">
                                   <label class="sr-only" for="categoryName_1">Nombre de la categoría</label>
                                   <div class="input-group">
-                                    <input type="text" class="form-control" id="categoryName_1" name="categoryName_1" maxlength="" placeholder="Nombre" required>
+                                    <input type="text" class="form-control" id="categoryName_1" name="categoryName_1" maxlength="" placeholder="Nombre" >
                                     <span class="input-group-btn">
                                       <button id="categoryButton_1" class="btn btn-default" type="button" onclick="addOneElement('category',2);">
                                         <span class="glyphicon glyphicon-plus text-success"></span>
@@ -299,7 +308,7 @@
                                 <div id="level_1" class="form-group">
                                   <label class="sr-only" for="levelName_1">Nombre del nivel</label>
                                   <div class="input-group">
-                                    <input type="text" class="form-control" id="levelName_1" name="levelName_1" maxlength="" placeholder="Nombre" required>
+                                    <input type="text" class="form-control" id="levelName_1" name="levelName_1" maxlength="" placeholder="Nombre" >
                                     <span class="input-group-btn">
                                       <button id="levelButton_1" class="btn btn-default" type="button" onclick="addOneElement('level',2);">
                                         <span class="glyphicon glyphicon-plus text-success"></span>
