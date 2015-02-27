@@ -31,3 +31,4 @@ media
 
 # MIGRACIONES
 padel/apps/users/migrations/*
+padel/apps/torneos/migrations/*
