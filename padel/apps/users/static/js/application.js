@@ -188,39 +188,20 @@ $(document).ready(function() {
   /**
   * Show tournamentType explain and tournamentType fields
   */
-  // $("select[name='tournamentType']").change(function() {
-  //   for (i=0; i<this.options.length; i++) {
-  //     if (this.options[i].value == this.value) {
-  //       $("#"+this.options[i].value+"Explain").removeClass("hidden");
-  //       if (!$("#"+this.options[i].value+"Fields").hasClass('in')) {
-  //         $("#"+this.options[i].value+"Fields").collapse('show');
-  //       }
-  //     }
-  //     else {
-  //       $("#"+this.options[i].value+"Explain").addClass("hidden");
-  //       if ($("#"+this.options[i].value+"Fields").hasClass('in')) {
-  //         $("#"+this.options[i].value+"Fields").collapse('hide');
-  //       }
-  //     }
-  //   }
-  // });
-    $("select[name='tournamentType']").change(function() {
-      console.log("hola")
+  $("select[name='tournamentType']").change(function() {
     for (i=0; i<this.options.length; i++) {
-      console.log(this.options[i].value);
-      console.log(this.value);
-      // if (this.options[i].value == this.value) {
-      //   $("#"+this.options[i].value+"Explain").removeClass("hidden");
-      //   if (!$("#"+this.options[i].value+"Fields").hasClass('in')) {
-      //     $("#"+this.options[i].value+"Fields").collapse('show');
-      //   }
-      // }
-      // else {
-      //   $("#"+this.options[i].value+"Explain").addClass("hidden");
-      //   if ($("#"+this.options[i].value+"Fields").hasClass('in')) {
-      //     $("#"+this.options[i].value+"Fields").collapse('hide');
-      //   }
-      // }
+      if (this.options[i].value == this.value) {
+        $("#"+this.options[i].value+"Explain").removeClass("hidden");
+        if (!$("#"+this.options[i].value+"Fields").hasClass('in')) {
+          $("#"+this.options[i].value+"Fields").collapse('show');
+        }
+      }
+      else {
+        $("#"+this.options[i].value+"Explain").addClass("hidden");
+        if ($("#"+this.options[i].value+"Fields").hasClass('in')) {
+          $("#"+this.options[i].value+"Fields").collapse('hide');
+        }
+      }
     }
   });
 
