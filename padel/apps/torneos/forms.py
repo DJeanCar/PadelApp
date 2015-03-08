@@ -1,6 +1,6 @@
 #encoding=utf-8
 from django import forms
-from .models import Competicion, TipoCompeticion
+from .models import Competicion, TipoCompeticion, ClasificacionCategoria
 
 
 class CrearTorneoForm(forms.ModelForm):
@@ -9,6 +9,12 @@ class CrearTorneoForm(forms.ModelForm):
 		widget = forms.Select(attrs = {
 				'class' : 'form-control',
 				'id' : 'tournamentType'
+			}))
+
+	categoryClassification = forms.ModelChoiceField(queryset=ClasificacionCategoria.objects.all(),
+		widget = forms.Select(attrs = {
+				'class' : 'form-control',
+				'id' : 'categoryClassification'
 			}))
 
 	max_jugadores = forms.IntegerField(

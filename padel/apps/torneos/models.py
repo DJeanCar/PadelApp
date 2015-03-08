@@ -1,7 +1,7 @@
 from django.db import models
 from django.template.defaultfilters import slugify
 
-from apps.users.models import Player
+from apps.users.models import Player, User
 
 	
 class Categoria(models.Model):
@@ -10,6 +10,23 @@ class Categoria(models.Model):
 
 	def __unicode__(self):
 		return self.name
+
+class ClasificacionCategoria(models.Model):
+
+	user = models.ForeignKey(User)
+	name = models.CharField(max_length=100)
+
+	def __unicode__(self):
+		return self.name
+
+class ClasificacionCategoria_Categoria(models.Model):
+
+	clas_cat = models.ForeignKey(ClasificacionCategoria)
+	category = models.ForeignKey(Categoria)
+	orden = models.IntegerField()
+
+	def __unicode__(self):
+		return self.category.name
 
 # class Division(models.Model):
 # 	categoria = models.ForeignKey(Categoria)

@@ -29,7 +29,9 @@
           <form id="signinForm" role="form" method="POST">{% csrf_token %}
             <h2 class="h4 signin-heading text-center">Entra en tu cuenta</h2>
             {{ form.email }}
+            {{ form.email.errors }}
             {{ form.password }}
+            {{ form.password.errors }}
             <div class="checkbox">
               <label>
                 <input type="checkbox" value="remember-me"> Recordarme en este ordenador

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Categoria, TipoCompeticion, Competicion
+from .models import Categoria, TipoCompeticion, Competicion, ClasificacionCategoria, ClasificacionCategoria_Categoria
 
 
 @admin.register(Categoria)
@@ -12,4 +12,12 @@ class TipoCompeticionAdmin(admin.ModelAdmin):
 
 @admin.register(Competicion)
 class CompeticionAdmin(admin.ModelAdmin):
+	pass
+
+@admin.register(ClasificacionCategoria)
+class ClasificacionCategoriaAdmin(admin.ModelAdmin):
+	pass
+
+@admin.register(ClasificacionCategoria_Categoria)
+class ClasificacionCategoria_CategoriaAdmin(admin.ModelAdmin):
 	pass

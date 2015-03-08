@@ -10,13 +10,27 @@ class LoginForm(forms.Form):
 					'type' : 'email',
 					'class' : 'form-control upperControl',
 					'placeholder' : 'Email',
+					'required' : 'True'
 					}))
 	password = forms.CharField(max_length=30,
 	 			widget = forms.TextInput(attrs = {
 	 				'type' : 'password',
 	 				'class' : 'form-control lowerControl',
-	 				'placeholder' : 'Contraseña'
+	 				'placeholder' : 'Contraseña',
+	 				'required' : 'True'
 	 				}))
+
+	def clean(self):
+		if self.cleaned_data.get("email") and self.cleaned_data.get("password"):
+			email = self.cleaned_data.get("email")
+			email_exist = User.objects.filter(email = email).exists()
+			if email_exist:
+				user = User.objects.get(email = email)
+				if not user.check_password(self.cleaned_data.get("password")):
+					self.add_error('password', 'Email y/o contraseña incorrectas')
+			else:
+				self.add_error('password', 'Email y/o contraseña incorrectas')
+
 
 class UserCreationForm(forms.ModelForm):
 
