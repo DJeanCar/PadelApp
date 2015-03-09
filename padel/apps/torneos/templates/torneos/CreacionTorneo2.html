@@ -294,15 +294,24 @@
         $('#tournamentType').on('change', TipoCompeticion);
 
         function TipoCompeticion(){
-          var tipoCompeticion = $(this).val();
-          if (tipoCompeticion == "liga")
-            $("#fields").html(ligaFields);
-          else if (tipoCompeticion == "fanatic")
-            $("#fields").html(fanaticFields);
-          else if (tipoCompeticion == "yosolo")
-            $("#fields").html(yosoloFields);
-          else
-            $("#fields").html("");
+          var slug_competicion = $(this).val();
+          $.ajax({
+                data : { 'slug_competicion' : slug_competicion},
+                url : '/tipo-competicion/',
+                type : 'get',
+                success : function (data) {
+                    console.log(data.tipo_competicion)
+                    // Aqui tienen que mostrar los campos en el Html de acuerdo a la competicion
+                    if (slug_competicion == "liga")
+                      $("#fields").html(ligaFields);
+                    else if (slug_competicion == "fanatic")
+                      $("#fields").html(fanaticFields);
+                    else if (slug_competicion == "yosolo")
+                      $("#fields").html(yosoloFields);
+                    else
+                      $("#fields").html("");
+                }
+             });
         }
 
         function CrearDivision(){
