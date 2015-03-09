@@ -26,7 +26,11 @@ class CreateTorneoView(LoginRequiredMixin, FormView):
 
 def crear_division(request):
 	if request.is_ajax():
-		divisiones = ClasificacionCategoria_Categoria.objects.filter(clas_cat__id = request.GET['id']).order_by('orden')
+		divisiones = ClasificacionCategoria_Categoria.objects.values('category__name').filter(clas_cat__id = request.GET['id']).order_by('orden')
+		lista_divisiones = []
+		for a in divisiones:
+			lista_divisiones.append(a['category__name'])
+		return JsonResponse({'lista_divisiones' : lista_divisiones})
 	else:
 		raise Http404
 

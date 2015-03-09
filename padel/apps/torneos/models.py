@@ -37,7 +37,6 @@ class ClasificacionCategoria_Categoria(models.Model):
 # 		return self.name
 
 
-
 class TipoCompeticion(models.Model):
 
 	name = models.CharField(max_length=100, null=False,blank=False)
