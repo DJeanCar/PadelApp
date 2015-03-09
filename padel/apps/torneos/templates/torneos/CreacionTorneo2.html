@@ -294,16 +294,15 @@
         $('#tournamentType').on('change', TipoCompeticion);
 
         function TipoCompeticion(){
-          var slug_competicion = $(this).val();
-          $.ajax({
-                data : { 'slug_competicion' : slug_competicion},
-                url : '/tipo-competicion/',
-                type : 'get',
-                success : function (data) {
-                    console.log(data.tipo_competicion)
-                    // Aqui tienen que mostrar los campos en el Html de acuerdo a la competicion
-                }
-             });
+          var tipoCompeticion = $(this).val();
+          if (tipoCompeticion == "liga")
+            $("#fields").html(ligaFields);
+          else if (tipoCompeticion == "fanatic")
+            $("#fields").html(fanaticFields);
+          else if (tipoCompeticion == "yosolo")
+            $("#fields").html(yosoloFields);
+          else
+            $("#fields").html("");
         }
 
         function CrearDivision(){
@@ -313,11 +312,151 @@
                 url : '/crear-divisiones-ajax/',
                 type : 'get',
                 success : function (data) {
-                    // Aqui van las categorias se tiene que hacer un for y mostrar los inputs en la tabla 
+                    // Aqui van las categorias se tiene que hacer un for y mostrar los inputs en la tabla
                     console.log(data);
                 }
-             });    
+             });
         }
+
+var ligaFields =
+"<div class=\"row\"> \
+  <div class=\"col-xs-3\"> \
+    <div class=\"form-group\"> \
+      <label for=\"minPlayers\">Mínimo de jugadores <sup><span class=\"glyphicon glyphicon-asterisk text-danger\"></span></sup><span class=\"sr-only\">Obligatorio</span></label> \
+      <div class=\"row\"> \
+        <div class=\"col-xs-5\"> \
+          <input type=\"number\" class=\"form-control\" id=\"minPlayers\" name=\"minPlayers\" maxlength=\"\" required> \
+        </div> \
+      </div> \
+    </div> \
+  </div> \
+  <div class=\"col-xs-3\"> \
+    <div class=\"form-group\"> \
+      <label for=\"maxPlayers\">Máximo de jugadores <sup><span class=\"glyphicon glyphicon-asterisk text-danger\"></span></sup><span class=\"sr-only\">Obligatorio</span></label> \
+      <div class=\"row\"> \
+        <div class=\"col-xs-5\"> \
+          <input type=\"number\" class=\"form-control\" id=\"maxPlayers\" name=\"maxPlayers\" maxlength=\"\" required> \
+        </div> \
+      </div> \
+    </div> \
+  </div> \
+  <div class=\"col-xs-3\"> \
+    <div class=\"form-group\"> \
+      <label for=\"minTeams\">Mínimo de equipos <sup><span class=\"glyphicon glyphicon-asterisk text-danger\"></span></sup><span class=\"sr-only\">Obligatorio</span></label> \
+      <div class=\"row\"> \
+        <div class=\"col-xs-5\"> \
+          <input type=\"number\" class=\"form-control\" id=\"minTeams\" name=\"minTeams\" maxlength=\"\" required> \
+        </div> \
+      </div> \
+    </div> \
+  </div> \
+  <div class=\"col-xs-3\"> \
+    <div class=\"form-group\"> \
+      <label for=\"maxTeams\">Máximo de equipos <sup><span class=\"glyphicon glyphicon-asterisk text-danger\"></span></sup><span class=\"sr-only\">Obligatorio</span></label> \
+      <div class=\"row\"> \
+        <div class=\"col-xs-5\"> \
+          <input type=\"number\" class=\"form-control\" id=\"maxTeams\" name=\"maxTeams\" maxlength=\"\" required> \
+        </div> \
+      </div> \
+    </div> \
+  </div> \
+</div> \
+<div class=\"row\"> \
+  <div class=\"col-xs-3\"> \
+    <div class=\"form-group\"> \
+      <label for=\"price\">Precio <sup><span class=\"glyphicon glyphicon-asterisk text-danger\"></span></sup><span class=\"sr-only\">Obligatorio</span></label> \
+      <div class=\"input-group\"> \
+        <input type=\"number\" class=\"form-control\" id=\"price\" name=\"price\" pattern=\"[0-9]+([\.|,][0-9]+)?\" step=\"0.01\" maxlength=\"\" placeholder=\"Precio\" required> \
+        <span class=\"input-group-addon\">&euro;</span> \
+      </div> \
+    </div> \
+  </div> \
+  <div class=\"col-xs-3\"> \
+    <div class=\"form-group\"> \
+      <label for=\"account\">Número de cuenta <sup><span class=\"glyphicon glyphicon-asterisk text-danger\"></span></sup><span class=\"sr-only\">Obligatorio</span></label> \
+      <input type=\"text\" class=\"form-control\" id=\"account\" name=\"account\" maxlength=\"\" placeholder=\"Número de cuenta\" required> \
+    </div> \
+  </div> \
+  <div class=\"col-xs-3\"> \
+    <div class=\"form-group\"> \
+      <label for=\"substitutionDate\">Fecha de sustitución <sup><span class=\"glyphicon glyphicon-asterisk text-danger\"></span></sup><span class=\"sr-only\">Obligatorio</span></label> \
+      <input type=\"date\" class=\"form-control\" id=\"substitutionDate\" name=\"substitutionDate\" placeholder=\"dd/mm/aaaa\" required> \
+    </div> \
+  </div> \
+  <div class=\"col-xs-3\"> \
+    <div class=\"form-group\"> \
+      <label for=\"inscriptionLimitDate\">Fecha límite de inscripción <sup><span class=\"glyphicon glyphicon-asterisk text-danger\"></span></sup><span class=\"sr-only\">Obligatorio</span></label> \
+      <input type=\"date\" class=\"form-control\" id=\"inscriptionLimitDate\" name=\"inscriptionLimitDate\" placeholder=\"dd/mm/aaaa\" required> \
+    </div> \
+  </div> \
+</div> \
+<div class=\"row\"> \
+  <div class=\"col-xs-6\"> \
+    <div class=\"form-group\"> \
+      <label for=\"logo\">Logo de la competición</label> \
+      <input type=\"file\" class=\"form-control\" id=\"logo\" name=\"logo\"> \
+    </div> \
+  </div> \
+  <div class=\"col-xs-6\"> \
+    <div class=\"form-group\"> \
+      <label for=\"timePreference\">Preferencia horaria</label> \
+      <textarea class=\"form-control\" id=\"timePreference\" name=\"timePreference\" maxlength=\"\" placeholder=\"Explica la preferencia horaria para jugar\" rows=\"3\"></textarea> \
+    </div> \
+  </div> \
+</div>";
+
+var yosoloFields =
+"<div class=\"row\"> \
+  <div class=\"col-xs-4\"> \
+    <div class=\"form-group\"> \
+      <label for=\"price\">Precio <sup><span class=\"glyphicon glyphicon-asterisk text-danger\"></span></sup><span class=\"sr-only\">Obligatorio</span></label> \
+      <div class=\"input-group\"> \
+        <input type=\"number\" class=\"form-control\" id=\"price\" name=\"price\" pattern=\"[0-9]+([\.|,][0-9]+)?\" step=\"0.01\" maxlength=\"\" placeholder=\"Precio\" required> \
+        <span class=\"input-group-addon\">&euro;</span> \
+      </div> \
+    </div> \
+  </div> \
+  <div class=\"col-xs-4\"> \
+    <div class=\"form-group\"> \
+      <label for=\"initDate\">Fecha de inicio <sup><span class=\"glyphicon glyphicon-asterisk text-danger\"></span></sup><span class=\"sr-only\">Obligatorio</span></label> \
+      <input type=\"date\" class=\"form-control\" id=\"initDate\" name=\"initDate\" placeholder=\"dd/mm/aaaa\" required> \
+    </div> \
+  </div> \
+  <div class=\"col-xs-4\"> \
+    <div class=\"form-group\"> \
+      <label for=\"endDate\">Fecha de finalización <sup><span class=\"glyphicon glyphicon-asterisk text-danger\"></span></sup><span class=\"sr-only\">Obligatorio</span></label> \
+      <input type=\"date\" class=\"form-control\" id=\"endDate\" name=\"endDate\" placeholder=\"dd/mm/aaaa\" required> \
+    </div> \
+  </div> \
+</div> \
+<p class=\"help-block\">...</p>";
+
+var fanaticFields =
+"<div class=\"row\"> \
+  <div class=\"col-xs-4\"> \
+    <div class=\"form-group\"> \
+      <label for=\"price\">Precio <sup><span class=\"glyphicon glyphicon-asterisk text-danger\"></span></sup><span class=\"sr-only\">Obligatorio</span></label> \
+      <div class=\"input-group\"> \
+        <input type=\"number\" class=\"form-control\" id=\"price\" name=\"price\" pattern=\"[0-9]+([\.|,][0-9]+)?\" step=\"0.01\" maxlength=\"\" placeholder=\"Precio\" required> \
+        <span class=\"input-group-addon\">&euro;</span> \
+      </div> \
+    </div> \
+  </div> \
+  <div class=\"col-xs-4\"> \
+    <div class=\"form-group\"> \
+      <label for=\"initDate\">Fecha de inicio <sup><span class=\"glyphicon glyphicon-asterisk text-danger\"></span></sup><span class=\"sr-only\">Obligatorio</span></label> \
+      <input type=\"date\" class=\"form-control\" id=\"initDate\" name=\"initDate\" placeholder=\"dd/mm/aaaa\" required> \
+    </div> \
+  </div> \
+  <div class=\"col-xs-4\"> \
+    <div class=\"form-group\"> \
+      <label for=\"endDate\">Fecha de finalización <sup><span class=\"glyphicon glyphicon-asterisk text-danger\"></span></sup><span class=\"sr-only\">Obligatorio</span></label> \
+      <input type=\"date\" class=\"form-control\" id=\"endDate\" name=\"endDate\" placeholder=\"dd/mm/aaaa\" required> \
+    </div> \
+  </div> \
+</div> \
+<p class=\"help-block\">...</p>";
+
     </script>
   </body>
 </html>
