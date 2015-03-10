@@ -290,7 +290,6 @@
     <script src="{% static 'js/jquery.placeholder.js' %}"></script>
 
     <script>
-        $('#createDivisionsButton').on('click', CrearDivision);
         $('#tournamentType').on('change', TipoCompeticion);
 
         function TipoCompeticion(){
@@ -310,19 +309,6 @@
                       $("#fields").html(yosoloFields);
                     else
                       $("#fields").html("");
-                }
-             });
-        }
-
-        function CrearDivision(){
-             var id_categoryClassification = $('#categoryClassification').val();
-             $.ajax({
-                data : { 'id' : id_categoryClassification},
-                url : '/crear-divisiones-ajax/',
-                type : 'get',
-                success : function (data) {
-                    // Aqui van las categorias se tiene que hacer un for y mostrar los inputs en la tabla
-                    console.log(data);
                 }
              });
         }
