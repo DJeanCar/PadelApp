@@ -419,8 +419,17 @@ function createDivisions() {
     var categories = [];
     //The user selects an existing category classification
     if ($("#categoryClassification").val().length > 0) {
-      //var categories[] = AJAX.call($("#categoryClassification").value); //Call the server to get the selected categories
-      categories = ['Masculina', 'Femenina', 'Mixta'];
+      var id_categoryClassification = $('#categoryClassification').val();
+      $.ajax({
+        data : { 'id' : id_categoryClassification},
+        URL : '/crear-divisiones-ajax/',
+        type : 'get',
+        success : function (data) {
+          // Aqui van las categorias se tiene que hacer un for y mostrar los inputs en la tabla
+          console.log(data);
+          categories = JSON.parse(data);
+        }
+      });
     }
     //The user creates a new category classification (all category names should not be empty)
     else if (($("#categoryName_1").val()) && ($("#categoryName_1").val().length > 0)) {
