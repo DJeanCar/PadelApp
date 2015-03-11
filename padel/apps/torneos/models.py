@@ -41,11 +41,14 @@ class TipoCompeticion(models.Model):
 
 	name = models.CharField(max_length=100, null=False,blank=False)
 	slug = models.SlugField()
-	# min_jugadores = models.IntegerField()
+	min_jugadores = models.IntegerField(null=True, blank=True)
 	max_jugadores = models.IntegerField(null=True, blank=True)
-	num_pistas = models.IntegerField(null=True, blank=True)
-	# min_equipos = models.IntegerField()
-	# max_equipos = models.IntegerField()	
+	min_equipos = models.IntegerField(null=True, blank=True)
+	max_equipos = models.IntegerField(null=True, blank=True)
+	num_cuenta = models.CharField(max_length=100, null=True, blank=True)
+	fecha_sustitucion = models.DateField(null=True, blank=True)
+	fecha_limite = models.DateField(null=True, blank=True)
+	preferencia_horaria = models.TextField(null=True, blank=True)
 
 	def __unicode__(self):  # Python 3: def __str__(self):
 		return self.name
@@ -59,6 +62,14 @@ class TipoCompeticion(models.Model):
 		super(TipoCompeticion, self).save(*args, **kwargs)
 
 
+class TipoInscripcion(models.Model):
+
+	name = models.CharField(max_length=100)
+
+	def __unicode__(self):
+		return self.name
+		
+
 class Competicion(models.Model):
 	"""
 		Logo y precio ( agregar ), permitir_nivel, permitir_division
@@ -66,6 +77,7 @@ class Competicion(models.Model):
 	categoria = models.ManyToManyField(Categoria)
 	admin = models.ForeignKey(Player) # administrador del torneo
 	tipoCompeticion = models.ForeignKey(TipoCompeticion) # tipo de competicion
+	tipoInscripcion = models.ForeignKey(TipoInscripcion)
 
 	name = models.CharField(max_length=50) # descripcion
 	urlTag = models.CharField(max_length=50,unique=True) # url corta

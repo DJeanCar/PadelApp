@@ -56,7 +56,7 @@
               <h2 class="panel-title">Creación de un torneo</h2>
             </div>
             <div class="panel-body">
-              <form id="createTournament" role="form">
+              <form id="createTournament" role="form" method="POST" enctype="multipart/form-data">{% csrf_token %}
                 <div class="row">
                   <div class="col-xs-4">
                     <div class="form-group">
@@ -77,12 +77,7 @@
                   <div class="col-xs-4">
                     <div class="form-group">
                       <label for="inscriptionType">Tipo de inscripción <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></label>
-                      <select class="form-control" id="inscriptionType" name="inscriptionType" required>
-                        <option value=""></option>
-                        <option value="1">Individual</option>
-                        <option value="2">Parejas</option>
-                        <option value="3">Equipos</option>
-                      </select>
+                      {{ form.tipoInscripcion }}
                     </div>
                   </div>
                   <div class="col-xs-4">
@@ -214,13 +209,7 @@
                             <div id="fixedLevelClassification" class="collapse in">
                               <div class="form-group">
                                 <label for="levelClassification">Clasificación de niveles</label>
-                                <select class="form-control" id="levelClassification" name="levelClassification">
-                                  <option value=""></option>
-                                  <option value="1">Alto/Medio/Bajo</option>
-                                  <option value="2">Avanzado/Medio/Iniciación</option>
-                                  <option value="3">6/5/4/3/2/1</option>
-                                  <option value="4">Profesional/Amateur/Aficionado</option>
-                                </select>
+                                {{ form.categoryClassification }}
                               </div>
                             </div>
                             <div id="newLevelClassification" class="collapse">
@@ -328,13 +317,14 @@
         }
 
 var ligaFields =
-"<div class=\"row\"> \
+'<div class=\"row\"> \
   <div class=\"col-xs-3\"> \
     <div class=\"form-group\"> \
       <label for=\"minPlayers\">Mínimo de jugadores <sup><span class=\"glyphicon glyphicon-asterisk text-danger\"></span></sup><span class=\"sr-only\">Obligatorio</span></label> \
       <div class=\"row\"> \
         <div class=\"col-xs-5\"> \
-          <input type=\"number\" class=\"form-control\" id=\"minPlayers\" name=\"minPlayers\" maxlength=\"\" required> \
+          {{ form.min_jugadores.errors }} \
+          {{ form.min_jugadores }} \
         </div> \
       </div> \
     </div> \
@@ -344,7 +334,8 @@ var ligaFields =
       <label for=\"maxPlayers\">Máximo de jugadores <sup><span class=\"glyphicon glyphicon-asterisk text-danger\"></span></sup><span class=\"sr-only\">Obligatorio</span></label> \
       <div class=\"row\"> \
         <div class=\"col-xs-5\"> \
-          <input type=\"number\" class=\"form-control\" id=\"maxPlayers\" name=\"maxPlayers\" maxlength=\"\" required> \
+          {{ form.max_jugadores.errors }} \
+          {{ form.max_jugadores }} \
         </div> \
       </div> \
     </div> \
@@ -354,7 +345,8 @@ var ligaFields =
       <label for=\"minTeams\">Mínimo de equipos <sup><span class=\"glyphicon glyphicon-asterisk text-danger\"></span></sup><span class=\"sr-only\">Obligatorio</span></label> \
       <div class=\"row\"> \
         <div class=\"col-xs-5\"> \
-          <input type=\"number\" class=\"form-control\" id=\"minTeams\" name=\"minTeams\" maxlength=\"\" required> \
+          {{ form.min_equipos.errors }} \
+          {{ form.min_equipos }} \
         </div> \
       </div> \
     </div> \
@@ -364,7 +356,8 @@ var ligaFields =
       <label for=\"maxTeams\">Máximo de equipos <sup><span class=\"glyphicon glyphicon-asterisk text-danger\"></span></sup><span class=\"sr-only\">Obligatorio</span></label> \
       <div class=\"row\"> \
         <div class=\"col-xs-5\"> \
-          <input type=\"number\" class=\"form-control\" id=\"maxTeams\" name=\"maxTeams\" maxlength=\"\" required> \
+          {{ form.max_equipos.errors }} \
+          {{ form.max_equipos }} \
         </div> \
       </div> \
     </div> \
@@ -375,7 +368,8 @@ var ligaFields =
     <div class=\"form-group\"> \
       <label for=\"price\">Precio <sup><span class=\"glyphicon glyphicon-asterisk text-danger\"></span></sup><span class=\"sr-only\">Obligatorio</span></label> \
       <div class=\"input-group\"> \
-        <input type=\"number\" class=\"form-control\" id=\"price\" name=\"price\" pattern=\"[0-9]+([\.|,][0-9]+)?\" step=\"0.01\" maxlength=\"\" placeholder=\"Precio\" required> \
+        {{ form.price.errors }} \
+        {{ form.price }} \
         <span class=\"input-group-addon\">&euro;</span> \
       </div> \
     </div> \
@@ -383,19 +377,22 @@ var ligaFields =
   <div class=\"col-xs-3\"> \
     <div class=\"form-group\"> \
       <label for=\"account\">Número de cuenta <sup><span class=\"glyphicon glyphicon-asterisk text-danger\"></span></sup><span class=\"sr-only\">Obligatorio</span></label> \
-      <input type=\"text\" class=\"form-control\" id=\"account\" name=\"account\" maxlength=\"\" placeholder=\"Número de cuenta\" required> \
+        {{ form.num_cuenta.errors }} \
+        {{ form.num_cuenta }} \
     </div> \
   </div> \
   <div class=\"col-xs-3\"> \
     <div class=\"form-group\"> \
       <label for=\"substitutionDate\">Fecha de sustitución <sup><span class=\"glyphicon glyphicon-asterisk text-danger\"></span></sup><span class=\"sr-only\">Obligatorio</span></label> \
-      <input type=\"date\" class=\"form-control\" id=\"substitutionDate\" name=\"substitutionDate\" placeholder=\"dd/mm/aaaa\" required> \
+        {{ form.fecha_sustitucion.errors }} \
+        {{ form.fecha_sustitucion }} \
     </div> \
   </div> \
   <div class=\"col-xs-3\"> \
     <div class=\"form-group\"> \
       <label for=\"inscriptionLimitDate\">Fecha límite de inscripción <sup><span class=\"glyphicon glyphicon-asterisk text-danger\"></span></sup><span class=\"sr-only\">Obligatorio</span></label> \
-      <input type=\"date\" class=\"form-control\" id=\"inscriptionLimitDate\" name=\"inscriptionLimitDate\" placeholder=\"dd/mm/aaaa\" required> \
+        {{ form.fecha_limite.errors }} \
+        {{ form.fecha_limite }} \
     </div> \
   </div> \
 </div> \
@@ -403,7 +400,8 @@ var ligaFields =
   <div class=\"col-xs-6\"> \
     <div class=\"form-group\"> \
       <label for=\"logo\">Logo de la competición</label> \
-      <input type=\"file\" class=\"form-control\" id=\"logo\" name=\"logo\"> \
+      {{ form.logo.errors }} \
+      {{ form.logo }}  \
     </div> \
   </div> \
   <div class=\"col-xs-6\"> \
@@ -412,7 +410,7 @@ var ligaFields =
       <textarea class=\"form-control\" id=\"timePreference\" name=\"timePreference\" maxlength=\"\" placeholder=\"Explica la preferencia horaria para jugar\" rows=\"3\"></textarea> \
     </div> \
   </div> \
-</div>";
+</div>';
 
 var yosoloFields =
 "<div class=\"row\"> \

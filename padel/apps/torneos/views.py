@@ -23,6 +23,11 @@ class CreateTorneoView(LoginRequiredMixin, FormView):
 		print form.cleaned_data
 		return super(CreateTorneoView, self).form_valid(form)
 
+	def form_invalid(self, form):
+		print "asdas"
+		print form.errors
+		return super(CreateTorneoView, self).form_invalid(form)
+
 
 def crear_division(request):
 	if request.is_ajax():

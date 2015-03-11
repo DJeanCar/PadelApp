@@ -8,42 +8,83 @@ class CrearTorneoForm(forms.ModelForm):
 	tournamentType = forms.ModelChoiceField(queryset=TipoCompeticion.objects.all(), to_field_name="slug",
 		widget = forms.Select(attrs = {
 				'class' : 'form-control',
-				'id' : 'tournamentType'
+				'id' : 'tournamentType',
+				'required':'True'
 			}))
 
 	categoryClassification = forms.ModelChoiceField(queryset=ClasificacionCategoria.objects.all(),
 		widget = forms.Select(attrs = {
 				'class' : 'form-control',
-				'id' : 'categoryClassification'
+				'id' : 'categoryClassification',
+				'required':'True'
 			}))
 
 	max_jugadores = forms.IntegerField(
 		widget = forms.TextInput(attrs = {
 				'type' : 'number',
 				'class' : 'form-control',
-				'id' : 'players'
+				'id' : 'max_jugadores',
+				'required':'True'
 			}))
-	num_pistas = forms.IntegerField(
+	min_jugadores = forms.IntegerField(
 		widget = forms.TextInput(attrs = {
 				'type' : 'number',
 				'class' : 'form-control',
-				'id' : 'courts'
+				'id' : 'min_jugadores',
+				'required':'True'
+			}))
+	min_equipos = forms.IntegerField(
+		widget = forms.TextInput(attrs = {
+				'type' : 'number',
+				'class' : 'form-control',
+				'id' : 'min_equipos',
+				'required':'True'
+			}))
+	max_equipos = forms.IntegerField(
+		widget = forms.TextInput(attrs = {
+				'type' : 'number',
+				'class' : 'form-control',
+				'id' : 'max_equipos',
+				'required':'True'
+			}))
+	num_cuenta = forms.IntegerField(
+		widget = forms.TextInput(attrs = {
+				'type' : 'number',
+				'class' : 'form-control',
+				'id' : 'num_cuenta',
+				'required':'True'
+			}))
+	fecha_sustitucion = forms.DateField(
+		widget = forms.TextInput(attrs = {
+				'type' : 'date',
+				'class' : 'form-control',
+				'id' : 'fecha_sustitucion',
+				'required':'True'
+			}))
+	fecha_limite = forms.DateField(
+		widget = forms.TextInput(attrs = {
+				'type' : 'date',
+				'class' : 'form-control',
+				'id' : 'fecha_limite',
+				'required':'True'
 			}))
 
 	class Meta:
 		model = Competicion
 		fields = ('name', 'urlTag', 'logo',
-					'fecha_inicio','fecha_fin', 'price')
+					'fecha_inicio','fecha_fin', 'price', 'tipoInscripcion')
 		widgets = {
 			'name' : forms.TextInput(attrs={
 					'id' : 'name',
 					'class' : 'form-control',
-					'placeholder': 'Nombre del torneo'
+					'placeholder': 'Nombre del torneo',
+					'required':'True'
 				}),
 			'urlTag' : forms.TextInput(attrs={
 					'id' : 'url',
 					'class' : 'form-control',
-					'placeholder': 'URL corta'
+					'placeholder': 'URL corta',
+					'required':'True'
 				}),
 			'price' : forms.TextInput(attrs = {
 					'type' : 'number', 
@@ -51,18 +92,26 @@ class CrearTorneoForm(forms.ModelForm):
 					'id' : 'price',
 					'pattern' : '[0-9]+([\.|,][0-9]+)?',
 					'step' : '0.01',
-					'placeholder' : 'Precio'
+					'placeholder' : 'Precio',
+					'required':'True'
 				}),
 			'fecha_inicio' : forms.TextInput(attrs = {
 					'type' : 'date',
 					'class' : 'form-control',
 					'id' : 'initDate',
-					'placeholder' : 'dd/mm/aaaa'
+					'placeholder' : 'dd/mm/aaaa',
+					'required':'True'
 				}),
 			'fecha_fin' : forms.TextInput(attrs = {
 					'type' : 'date',
 					'class' : 'form-control',
 					'id' : 'endDate',
-					'placeholder' : 'dd/mm/aaaa'
-				})	
+					'placeholder' : 'dd/mm/aaaa',
+					'required':'True'
+				}),
+			'tipoInscripcion' : forms.Select(attrs = {
+				'class' : 'form-control',
+				'id' : 'tipoInscripcion',
+				'required':'True'
+				})
 		}
