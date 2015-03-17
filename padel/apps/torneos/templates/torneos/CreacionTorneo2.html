@@ -101,12 +101,7 @@
                       <div class="col-xs-4">
                         <div class="form-group">
                           <label for="tournamentType">Tipo de torneo <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></label>
-                          <select class="form-control" id="tournamentType" name="tournamentType" required>
-                            <option value=""></option>
-                            <option value="liga">Liga</option>
-                            <option value="fanatic">Fanatic</option>
-                            <option value="yosolo">YoSolo</option>
-                          </select>
+                          {{ form.tournamentType }}
                         </div>
                       </div>
                       <div class="col-xs-8">

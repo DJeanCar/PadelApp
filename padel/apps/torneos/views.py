@@ -28,6 +28,15 @@ class CreateTorneoView(LoginRequiredMixin, FormView):
 		print form.errors
 		return super(CreateTorneoView, self).form_invalid(form)
 
+	def get_initial(self):
+		from .models import ClasificacionCategoria
+		category = ClasificacionCategoria.objects.all()
+		print category
+		print category[0].id
+		dic = {
+				'tournamentType' : [cat.id for cat in category]
+		}
+		return dic
 
 def crear_division(request):
 	if request.is_ajax():
