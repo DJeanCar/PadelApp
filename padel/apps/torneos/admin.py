@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Categoria, TipoCompeticion, Competicion, ClasificacionCategoria, ClasificacionCategoria_Categoria, TipoInscripcion
+from .models import *
 
 
 @admin.register(Categoria)
@@ -24,4 +24,20 @@ class ClasificacionCategoria_CategoriaAdmin(admin.ModelAdmin):
 
 @admin.register(TipoInscripcion)
 class TipoInscripcionAdmin(admin.ModelAdmin):
+	pass
+
+@admin.register(Nivel)
+class NivelAdmin(admin.ModelAdmin):
+	pass
+
+@admin.register(ClasificacionNivel)
+class ClasificacionNivelAdmin(admin.ModelAdmin):
+	pass
+
+@admin.register(ClasificacionNivel_Nivel)
+class ClasificacionNivel_NivelAdmin(admin.ModelAdmin):
+	pass
+
+@admin.register(DatosTipoCompeticion)
+class DatosTipoCompeticionAdmin(admin.ModelAdmin):
 	pass

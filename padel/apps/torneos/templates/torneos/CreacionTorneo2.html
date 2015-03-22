@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
   <head>
@@ -133,64 +132,11 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-xs-6">
-                    <div class="panel panel-primary">
-                      <div class="panel-body">
-                        <div class="row">
-                          <div class="col-xs-7">
-                            <div id="fixedCategoryClassification" class="collapse in">
-                              <div class="form-group">
-                                <label for="categoryClassification">Clasificación de categorías <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></label>
-                                {{ form.categoryClassification }}
-                                {{ form.categoryClassification.errors }}
-                              </div>
-                            </div>
-                            <div id="newCategoryClassification" class="collapse">
-                              <fieldset id="categoryGroup">
-                                <legend class="legendAsLabel">Clasificación de categorías personalizada <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></legend>
-                                <div class="form-group">
-                                  <label class="sr-only" for="categoryClassificationName">Nombre de la clasificación de categorías</label>
-                                  <input type="text" class="form-control" id="categoryClassificationName" name="categoryClassificationName" maxlength="" placeholder="Nombre de la clasificación" required>
-                                </div>
-                                <div id="category_1" class="form-group">
-                                  <label class="sr-only" for="categoryName_1">Nombre de la categoría</label>
-                                  <div class="input-group">
-                                    <input type="text" class="form-control" id="categoryName_1" name="categoryName_1" maxlength="" placeholder="Nombre" required>
-                                    <span class="input-group-btn">
-                                      <button id="categoryButton_1" class="btn btn-default" type="button" onclick="addOneElement('category',2);">
-                                        <span class="glyphicon glyphicon-plus text-success"></span>
-                                      </button>
-                                    </span>
-                                  </div>
-                                </div>
-                              </fieldset>
-                            </div>
-                          </div>
-                          <div class="col-xs-5">
-                            <button type="button" class="btn btn-info multipleLines previousMargin" id="newCategoryClassificationButton">Quiero mi propia clasificación de categorías</button>
-                          </div>
-                        </div>
-                        <p class="help-block">Una vez que hayas indicado las categorías podrás crear las divisiones o dejarlo para más adelante, durante el período de inscripción.</p>
-                        <div class="row">
-                          <div class="col-xs-6">
-                            <button type="button" class="btn btn-info" id="createDivisionsButton" aria-expanded="false" aria-controls="divisions" onclick="createDivisions();">Deseo crear ahora las divisiones</button>
-                          </div>
-                        </div>
-                        <div id="divisions" class="collapse previousGap">
-                          <table id="categoriesTable" class="table table-bordered noBottomMargin">
-                            <thead>
-                              <tr class="active">
-                                <th class="text-center">Categorías</th>
-                                <th class="text-center">Divisiones</th>
-                              </tr>
-                            <thead>
-                            <tbody id="categoriesTableBody">
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <!-- AQUI VA EL CODIGO QUE FALTAA -->
+
+
+
+
                   <div class="col-xs-6">
                     <div class="panel panel-primary">
                       <div class="panel-body">
@@ -199,7 +145,7 @@
                             <div id="fixedLevelClassification" class="collapse in">
                               <div class="form-group">
                                 <label for="levelClassification">Clasificación de niveles</label>
-                                {{ form.categoryClassification }}
+                                {{ form.ClasificacionNivel }}
                               </div>
                             </div>
                             <div id="newLevelClassification" class="collapse">
@@ -212,7 +158,7 @@
                                 <div id="level_1" class="form-group">
                                   <label class="sr-only" for="levelName_1">Nombre del nivel</label>
                                   <div class="input-group">
-                                    <input type="text" class="form-control" id="levelName_1" name="levelName_1" maxlength="" placeholder="Nombre" required>
+                                    <input type="text" class="form-control" id="levelName_1" name="levelName_1" maxlength="" placeholder="Nombre">
                                     <span class="input-group-btn">
                                       <button id="levelButton_1" class="btn btn-default" type="button" onclick="addOneElement('level',2);">
                                         <span class="glyphicon glyphicon-plus text-success"></span>

@@ -1,6 +1,6 @@
 #encoding=utf-8
 from django import forms
-from .models import Competicion, TipoCompeticion, ClasificacionCategoria
+from .models import Competicion, TipoCompeticion, ClasificacionCategoria, ClasificacionNivel
 
 
 class CrearTorneoForm(forms.ModelForm):
@@ -12,7 +12,14 @@ class CrearTorneoForm(forms.ModelForm):
 				'required':'True'
 			}))
 
-	categoryClassification = forms.ModelChoiceField(queryset=ClasificacionCategoria.objects.all(),
+	# categoryClassification = forms.ModelChoiceField(queryset=ClasificacionCategoria.objects.all(),
+	# 	widget = forms.Select(attrs = {
+	# 			'class' : 'form-control',
+	# 			'id' : 'categoryClassification',
+	# 			'required':'True'
+	# 		}))
+
+	ClasificacionNivel = forms.ModelChoiceField(queryset=ClasificacionNivel.objects.all(),
 		widget = forms.Select(attrs = {
 				'class' : 'form-control',
 				'id' : 'categoryClassification',
