@@ -211,15 +211,19 @@ $(document).ready(function() {
   $("#newCategoryClassificationButton").on("click", function() {
     if ($("#fixedCategoryClassification").hasClass('in')) {
       $("#fixedCategoryClassification").collapse('hide');
+      $("#fixedCategoryClassification").html("");
     }
     else {
+      $("#fixedCategoryClassification").html(fixedCategoryClassification);
       $("#fixedCategoryClassification").collapse('show');
     }
 
     if ($("#newCategoryClassification").hasClass('in')) {
       $("#newCategoryClassification").collapse('hide');
+      $("#newCategoryClassification").html("");
     }
     else {
+      $("#newCategoryClassification").html(newCategoryClassification);
       $("#newCategoryClassification").collapse('show');
     }
   });
@@ -230,15 +234,19 @@ $(document).ready(function() {
   $("#newLevelClassificationButton").on("click", function() {
     if ($("#fixedLevelClassification").hasClass('in')) {
       $("#fixedLevelClassification").collapse('hide');
+      $("#fixedLevelClassification").html("");
     }
     else {
+      $("#fixedLevelClassification").html(fixedLevelClassification);
       $("#fixedLevelClassification").collapse('show');
     }
 
     if ($("#newLevelClassification").hasClass('in')) {
       $("#newLevelClassification").collapse('hide');
+      $("#newLevelClassification").html("");
     }
     else {
+      $("#newLevelClassification").html(newLevelClassification);
       $("#newLevelClassification").collapse('show');
     }
   });
@@ -418,7 +426,7 @@ function createDivisions() {
 
     var categories = [];
     //The user selects an existing category classification
-    if ($("#categoryClassification").val().length > 0) {
+    if (($("#categoryClassification").length > 0) && ($("#categoryClassification").val().length > 0)) {
       var id_categoryClassification = $('#categoryClassification').val();
       $.ajax({
         data : { 'id' : id_categoryClassification},
@@ -507,3 +515,55 @@ function moveOptions(from, to) {
     $('#'+to).change();
   });
 };
+
+var fixedCategoryClassification =
+"<div class=\"form-group\"> \
+  <label for=\"categoryClassification\">Clasificación de categorías <sup><span class=\"glyphicon glyphicon-asterisk text-danger\"></span></sup><span class=\"sr-only\">Obligatorio</span></label> \
+  {{ form.categoryClassification }} \
+</div>";
+
+var newCategoryClassification =
+"<fieldset id=\"categoryGroup\"> \
+  <legend class=\"legendAsLabel\">Clasificación de categorías personalizada <sup><span class=\"glyphicon glyphicon-asterisk text-danger\"></span></sup><span class=\"sr-only\">Obligatorio</span></legend> \
+  <div class=\"form-group\"> \
+    <label class=\"sr-only\" for=\"categoryClassificationName\">Nombre de la clasificación de categorías</label> \
+    <input type=\"text\" class=\"form-control\" id=\"categoryClassificationName\" name=\"categoryClassificationName\" maxlength=\"\" placeholder=\"Nombre de la clasificación\" required> \
+  </div> \
+  <div id=\"category_1\" class=\"form-group\"> \
+    <label class=\"sr-only\" for=\"categoryName_1\">Nombre de la categoría</label> \
+    <div class=\"input-group\"> \
+      <input type=\"text\" class=\"form-control\" id=\"categoryName_1\" name=\"categoryName_1\" maxlength=\"\" placeholder=\"Nombre\" required> \
+      <span class=\"input-group-btn\"> \
+        <button id=\"categoryButton_1\" class=\"btn btn-default\" type=\"button\" onclick=\"addOneElement('category',2);\"> \
+          <span class=\"glyphicon glyphicon-plus text-success\"></span> \
+        </button> \
+      </span> \
+    </div> \
+  </div> \
+</fieldset>";
+
+var fixedLevelClassification =
+"<div class=\"form-group\"> \
+  <label for=\"levelClassification\">Clasificación de niveles</label> \
+  {{ form.levelClassification }} \
+</div>";
+
+var newLevelClassification =
+"<fieldset id=\"levelGroup\"> \
+  <legend class=\"legendAsLabel\">Clasificación de niveles personalizada</legend> \
+  <div class=\"form-group\"> \
+    <label class=\"sr-only\" for=\"levelClassificationName\">Nombre de la clasificación de niveles</label> \
+    <input type=\"text\" class=\"form-control\" id=\"levelClassificationName\" name=\"levelClassificationName\" maxlength=\"\" placeholder=\"Nombre de la clasificación\"> \
+  </div> \
+  <div id=\"level_1\" class=\"form-group\"> \
+    <label class=\"sr-only\" for=\"levelName_1\">Nombre del nivel</label> \
+    <div class=\"input-group\"> \
+      <input type=\"text\" class=\"form-control\" id=\"levelName_1\" name=\"levelName_1\" maxlength=\"\" placeholder=\"Nombre\" required> \
+      <span class=\"input-group-btn\"> \
+        <button id=\"levelButton_1\" class=\"btn btn-default\" type=\"button\" onclick=\"addOneElement('level',2);\"> \
+          <span class=\"glyphicon glyphicon-plus text-success\"></span> \
+        </button> \
+      </span> \
+    </div> \
+  </div> \
+</fieldset>";
