@@ -83,7 +83,7 @@ class Competicion(models.Model):
 	"""
 		Logo y precio ( agregar ), permitir_nivel, permitir_division
 	"""
-	categoria = models.ManyToManyField(Categoria, null=True, blank=True)
+	categoria = models.ForeignKey(ClasificacionCategoria)
 	admin = models.ForeignKey(Player) # administrador del torneo
 	tipoCompeticion = models.ForeignKey(TipoCompeticion) # tipo de competicion
 	tipoInscripcion = models.ForeignKey(TipoInscripcion)

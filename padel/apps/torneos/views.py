@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse_lazy
 from braces.views import LoginRequiredMixin
 
 from apps.users.models import Player
-from .models import TipoCompeticion, ClasificacionCategoria_Categoria, DatosTipoCompeticion,ClasificacionNivel, Nivel, Competicion
+from .models import TipoCompeticion, ClasificacionCategoria_Categoria, DatosTipoCompeticion,ClasificacionNivel, Nivel, Competicion, Categoria, ClasificacionCategoria
 from .forms import CrearTorneoForm
 
 class CreateTorneoView(LoginRequiredMixin, FormView):
@@ -21,6 +21,9 @@ class CreateTorneoView(LoginRequiredMixin, FormView):
 		return context
 
 	def form_valid(self, form):
+		print form.cleaned_data
+		print self.request.POST
+		################# Nivel 
 		if form.cleaned_data.get('ClasificacionNivel'):
 			clasificacionNivel = form.cleaned_data.get('ClasificacionNivel')
 		else:
@@ -35,8 +38,28 @@ class CreateTorneoView(LoginRequiredMixin, FormView):
 						nivel = Nivel.objects.get(name__iexact = self.request.POST['levelName_%s' % i])
 					except:
 						Nivel.objects.create(name = self.request.POST['levelName_%s' % i])
+		###########################
+		####################CATEGORIA
+		if form.cleaned_data.get('categoryClassification'):
+			clasificacionCategoria = form.cleaned_data.get('categoryClassification')
+		else:
+			clasificacionCategoria = ClasificacionCategoria.objects.create(
+					user = self.request.user,
+					name = self.request.POST['categoryClassificationName']
+				)
+			for i in range(1,10):
+				if "categoryName_%s" % i in self.request.POST:
+					try:
+						categoria = Categoria.objects.get(name__iexact = self.request.POST['categoryName_%s' % i])
+					except:
+						categoria = Categoria.objects.create(name = self.request.POST['categoryName_%s' % i])
+					ClasificacionCategoria_Categoria.objects.create(
+							clas_cat = clasificacionCategoria,
+							category = categoria,
+							orden = i
+						)
 		competicion = Competicion.objects.create(
-				# categoria = , Este campo faltaa!!!
+				categoria = clasificacionCategoria,
 				admin = Player.objects.get(user = self.request.user),
 				tipoCompeticion = form.cleaned_data['tournamentType'],
 				tipoInscripcion = form.cleaned_data['tipoInscripcion'],
