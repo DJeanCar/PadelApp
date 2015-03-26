@@ -418,9 +418,9 @@ function createDivisions() {
     //Show divisions
     $("#divisions").collapse('show');
     //Disable changes in categories
-    // $("#categoryClassification").prop("disabled", true);
+    $("#categoryClassification").prop("disabled", true);
     $("#newCategoryClassificationButton").prop("disabled", true);
-    $("#categoryClassificationNºame").prop("disabled", true);
+    $("#categoryClassificationName").prop("disabled", true);
     $("input[id^='categoryName_']").prop("disabled", true);
     $("button[id^='categoryButton_']").prop("disabled", true);
 
@@ -520,6 +520,7 @@ var fixedCategoryClassification =
 "<div class=\"form-group\"> \
   <label for=\"categoryClassification\">Clasificación de categorías <sup><span class=\"glyphicon glyphicon-asterisk text-danger\"></span></sup><span class=\"sr-only\">Obligatorio</span></label> \
   {{ form.categoryClassification }} \
+  {{ form.categoryClassification.errors }} \
 </div>";
 
 var newCategoryClassification =
