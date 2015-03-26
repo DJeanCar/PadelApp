@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse_lazy
 from braces.views import LoginRequiredMixin
 
 from apps.users.models import Player
-from .models import TipoCompeticion, ClasificacionCategoria_Categoria, DatosTipoCompeticion,ClasificacionNivel, Nivel, Competicion, Categoria, ClasificacionCategoria
+from .models import TipoCompeticion, ClasificacionCategoria_Categoria, DatosTipoCompeticion,ClasificacionNivel, Nivel, Competicion, Categoria, ClasificacionCategoria,Division
 from .forms import CrearTorneoForm
 
 class CreateTorneoView(LoginRequiredMixin, FormView):
@@ -38,6 +38,8 @@ class CreateTorneoView(LoginRequiredMixin, FormView):
 						nivel = Nivel.objects.get(name__iexact = self.request.POST['levelName_%s' % i])
 					except:
 						Nivel.objects.create(name = self.request.POST['levelName_%s' % i])
+				else:
+					break
 		###########################
 		####################CATEGORIA
 		if form.cleaned_data.get('categoryClassification'):
@@ -58,6 +60,9 @@ class CreateTorneoView(LoginRequiredMixin, FormView):
 							category = categoria,
 							orden = i
 						)
+				else:
+					break
+		########################
 		competicion = Competicion.objects.create(
 				categoria = clasificacionCategoria,
 				admin = Player.objects.get(user = self.request.user),
@@ -69,7 +74,9 @@ class CreateTorneoView(LoginRequiredMixin, FormView):
 				logo = form.cleaned_data['logo'],
 				fecha_inicio = form.cleaned_data['fecha_inicio'],
 				fecha_fin = form.cleaned_data['fecha_fin'],
-				price = form.cleaned_data['price']
+				price = form.cleaned_data['price'],
+				division_bool = form.cleaned_data['division_bool'],
+				nivel_bool = form.cleaned_data['nivel_bool']
 			)
 		#El de abajo si funca
 		DatosTipoCompeticion.objects.create(
@@ -84,6 +91,23 @@ class CreateTorneoView(LoginRequiredMixin, FormView):
 				fecha_limite = form.cleaned_data['fecha_limite'],
 				preferencia_horaria = self.request.POST['timePreference']
 			)
+		##################DIVISIONES
+		clas_orden = ClasificacionCategoria_Categoria.objects.filter(clas_cat = clasificacionCategoria).order_by('orden')
+		if "div-1Name_1" in self.request.POST:
+			# Aqui se hacen las divisiones
+			for clas in clas_orden:
+				if "div-%sName_1" % clas.orden in self.request.POST:
+					for i in range(1,10):
+						if "div-%sName_%s" % (clas.orden, i) in self.request.POST:
+							Division.objects.create(
+									categoria = clas.category,
+									competicion = competicion,
+									name = self.request.POST["div-%sName_%s" % (clas.orden, i)]
+								)
+						else:
+							break
+					# Aqui hay que hacer otro for para las divisiones de cada categoria
+		#################################
 		return super(CreateTorneoView, self).form_valid(form)
 
 	def form_invalid(self, form):

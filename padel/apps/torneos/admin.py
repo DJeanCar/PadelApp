@@ -41,3 +41,7 @@ class ClasificacionNivel_NivelAdmin(admin.ModelAdmin):
 @admin.register(DatosTipoCompeticion)
 class DatosTipoCompeticionAdmin(admin.ModelAdmin):
 	pass
+
+@admin.register(Division)
+class DivisionAdmin(admin.ModelAdmin):
+	pass

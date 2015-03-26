@@ -3,7 +3,7 @@ from django.template.defaultfilters import slugify
 
 from apps.users.models import Player, User
 
-	
+
 class Categoria(models.Model):
 
 	name = models.CharField(max_length=50)
@@ -99,6 +99,8 @@ class Competicion(models.Model):
 	price = models.FloatField()
 	estado = models.BooleanField(default=True)
 	
+	nivel_bool = models.BooleanField(default = False)
+	division_bool = models.BooleanField(default = False)
 
 	def __unicode__(self):
 		return self.name
@@ -118,3 +120,12 @@ class DatosTipoCompeticion(models.Model):
 
 	def __unicode__(self):
 		return self.tipoCompeticion.name
+
+
+class Division(models.Model):
+	categoria = models.ForeignKey(Categoria)
+	competicion = models.ForeignKey(Competicion)
+	name = models.CharField(max_length=100)
+
+	def __unicode__(self):
+		return self.name

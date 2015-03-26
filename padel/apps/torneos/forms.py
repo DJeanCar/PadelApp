@@ -79,7 +79,7 @@ class CrearTorneoForm(forms.ModelForm):
 	class Meta:
 		model = Competicion
 		fields = ('name', 'urlTag', 'logo',
-					'fecha_inicio','fecha_fin', 'price', 'tipoInscripcion')
+					'fecha_inicio','fecha_fin', 'price', 'tipoInscripcion', 'nivel_bool', 'division_bool')
 		widgets = {
 			'name' : forms.TextInput(attrs={
 					'id' : 'name',
