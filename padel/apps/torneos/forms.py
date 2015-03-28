@@ -12,14 +12,14 @@ class CrearTorneoForm(forms.ModelForm):
 				'required':'True'
 			}))
 
-	categoryClassification = forms.ModelChoiceField(queryset=ClasificacionCategoria.objects.all(),
+	categoryClassification = forms.ModelChoiceField(required=False, queryset=ClasificacionCategoria.objects.all(),
 	 	widget = forms.Select(attrs = {
 	 			'class' : 'form-control',
 	 			'id' : 'categoryClassification',
 	 			'required':'True'
 	 		}))
 
-	ClasificacionNivel = forms.ModelChoiceField(queryset=ClasificacionNivel.objects.all(),
+	ClasificacionNivel = forms.ModelChoiceField(required=False, queryset=ClasificacionNivel.objects.all(),
 		widget = forms.Select(attrs = {
 				'class' : 'form-control',
 				'id' : 'categoryClassification',
