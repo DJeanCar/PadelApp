@@ -135,7 +135,6 @@ class TorneoListView(TemplateView):
 
 	def get_context_data(self, **kwargs):
 		context = super(TorneoListView, self).get_context_data(**kwargs)
-		#print Competicion.objects.filter(admin = Player.objects.get(user = self.request.user))
 		context['torneos'] = Competicion.objects.filter(admin = Player.objects.get(user = self.request.user))
 		return context
 
