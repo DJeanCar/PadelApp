@@ -2,6 +2,9 @@ from django.conf.urls import patterns, url
 
 from .views import LoginView, RegisterUserView, WelcomeView, HomeView, UserProfileView,PlayerProfileView
 
+
+from . import views 
+
 urlpatterns = patterns('',
 	url(r'^$', HomeView.as_view(), name="home"),
 	url(r'^login/$', LoginView.as_view(), name="login"),
@@ -10,4 +13,6 @@ urlpatterns = patterns('',
 	url(r'^registrar/$', RegisterUserView.as_view(), name="register_user"),
 	url(r'^bienvenido/$', WelcomeView.as_view(), name="welcome"),
 	url(r'^salir/$', 'apps.users.views.Logout', name="logout"),
+
+	url(r'^jhuny/$', views.index),
 )

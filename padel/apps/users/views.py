@@ -212,3 +212,7 @@ class PlayerProfileView(LoginRequiredMixin, FormView):
 			'phone' : player.phone,
 		}
 		return data
+
+
+def index(request):
+	return render(request,'users/JugadoresAsociados.html' )

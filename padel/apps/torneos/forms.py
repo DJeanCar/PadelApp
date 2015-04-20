@@ -122,3 +122,9 @@ class CrearTorneoForm(forms.ModelForm):
 				'required':'True'
 				})
 		}
+
+class ChecksTorneo(forms.ModelForm):
+
+	class Meta:
+		model = Competicion
+		fields = ('nivel_bool','division_bool')
