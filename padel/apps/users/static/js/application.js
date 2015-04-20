@@ -1,5 +1,19 @@
 $(document).ready(function() {
 
+  $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+    var relativeURL = $(e.target).data('location');
+    if (relativeURL) {
+      $.ajax({
+        url : relativeURL,
+        type : 'get',
+        async : false,
+        success : function (data) {
+          $($(e.target).attr('href')).html(data);
+        }
+      });
+    }
+  });
+
   //Activate placeholder plugin for browsers not supporting it
   $('input, textarea').placeholder();
 
