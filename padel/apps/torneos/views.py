@@ -135,7 +135,7 @@ class TorneoListView(TemplateView):
 
 	def get_context_data(self, **kwargs):
 		context = super(TorneoListView, self).get_context_data(**kwargs)
-		context['torneos'] = Competicion.objects.filter(admin = self.request.user)
+		context['torneos'] = Competicion.objects.filter(admin = Player.objects.get(user = self.request.user))
 		return context
 
 class EditarTorneoView(DetailView):
@@ -146,7 +146,7 @@ class EditarTorneoView(DetailView):
 
 	def get_context_data(self, **kwargs):
 		context = super(EditarTorneoView, self).get_context_data(**kwargs)
-		context['torneos'] = Competicion.objects.filter(admin = self.request.user)
+		context['torneos'] = Competicion.objects.filter(admin = Player.objects.get(user = self.request.user))
 		context['slug'] = self.get_object().urlTag
 		context['datosCompeticion'] = DatosTipoCompeticion.objects.get(competicion=self.get_object())
 		context['categories'] = ClasificacionCategoria.objects.all()
