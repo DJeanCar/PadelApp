@@ -4,7 +4,16 @@ from .functions import send_email
 def create_player(strategy, details, response, is_new=False, user=None, *args, **kwargs):
 	"""Update user details using data from provider."""
 	if user and is_new:
-		firstSurname, secondSurname = details['last_name'].split()
+		full_name = details['last_name'].split()
+		if len(full_name) == 1:
+			firstSurname = full_name[0]
+			secondSurname = ""
+		elif len(full_name) == 2:
+			firstSurname = full_name[0]
+			secondSurname = full_name[1]
+		else:
+			firstSurname = ""
+			secondSurname = ""
 		Player.objects.create(user = user,
 							  first_name = details['first_name'],
 							  firstSurname = firstSurname,

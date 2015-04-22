@@ -10,9 +10,10 @@ from .models import User, Player, CommunicationOption, MediosComunication
 from .functions import Login, send_email
 
 
-class HomeView(TemplateView):
+class HomeView(LoginRequiredMixin, TemplateView):
 
 	template_name = 'users/EntradaUsuario.html'
+	login_url = '/login/'
 
 class LoginView(FormView):
 
@@ -69,7 +70,6 @@ class RegisterUserView(FormView):
 				subject = 'Bienvenidos a Padel',
 				email = user.email,
 			)
-		Login(self.request, form.cleaned_data['email'], form.cleaned_data['password'])
 		return super(RegisterUserView, self).form_valid(form)
 
 
@@ -101,6 +101,8 @@ class UserProfileView(LoginRequiredMixin, FormView):
 	def get_context_data(self, **kwargs):
 		context = super(UserProfileView, self).get_context_data(**kwargs)
 		context['players'] = Player.objects.filter(is_active = False, user=self.request.user)
+		player_active = Player.objects.get(user = self.request.user, is_active=True)
+		context['lang'] = player_active.language
 		return context
 
 	def post(self, request, *args, **kwargs):
@@ -132,6 +134,8 @@ class UserProfileView(LoginRequiredMixin, FormView):
 			player.first_name = request.POST['first_name']
 			player.firstSurname = request.POST['firstSurname']
 			player.secondSurname = request.POST['secondSurname']
+			player.language = request.POST['language']
+			dic["lang"] = player.language
 			if request.POST['birth_date']:
 				player.birth_date = request.POST['birth_date']
 			if request.POST['phone']:
@@ -214,5 +218,14 @@ class PlayerProfileView(LoginRequiredMixin, FormView):
 		return data
 
 
-def index(request):
-	return render(request,'users/JugadoresAsociados.html' )
+class DeleteAccountView(LoginRequiredMixin, TemplateView):
+
+	login_url = '/login/'
+
+	def get(self, request, *args, **kwargs):
+		if int(request.user.id) == int(request.GET['id']):
+			logout(request)
+			User.objects.get(id = request.GET['id']).delete()
+			return '/login/'
+		else:
+			raise Http404

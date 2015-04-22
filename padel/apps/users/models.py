@@ -1,3 +1,4 @@
+#encoding=utf-8
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.conf import settings
@@ -50,6 +51,11 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 class Player(models.Model):
 
+	languages = (
+			('es', 'Español'),
+			('en', 'Ingles')
+		)
+
 	user = models.ForeignKey(settings.AUTH_USER_MODEL)   
 	first_name = models.CharField(max_length=250)
 	firstSurname = models.CharField(max_length=250)
@@ -57,6 +63,7 @@ class Player(models.Model):
 	birth_date = models.DateField(null=True, blank=True)
 	phone = models.BigIntegerField(null=True, blank=True)
 	edad = models.IntegerField(null=True, blank=True)
+	language = models.CharField(max_length=50 ,null=True, blank=True,choices = languages)
 
 	is_active = models.BooleanField(default=False)
 

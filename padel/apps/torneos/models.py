@@ -92,7 +92,7 @@ class Competicion(models.Model):
 	name = models.CharField(max_length=50) # descripcion
 	urlTag = models.CharField(max_length=50,unique=True) # url corta
 	
-	logo = models.ImageField(upload_to = 'competicion')	
+	logo = models.ImageField(upload_to = 'competicion', null=True, blank=True)	
 	fecha_inicio = models.DateField()
 	fecha_fin = models.DateField()
 	

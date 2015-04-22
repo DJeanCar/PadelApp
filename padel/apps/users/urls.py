@@ -14,5 +14,5 @@ urlpatterns = patterns('',
 	url(r'^bienvenido/$', WelcomeView.as_view(), name="welcome"),
 	url(r'^salir/$', 'apps.users.views.Logout', name="logout"),
 
-	url(r'^jhuny/$', views.index),
+	url(r'^eliminar-cuenta/$', views.DeleteAccountView.as_view(), name="delete_account"),
 )

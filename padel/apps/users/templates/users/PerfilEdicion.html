@@ -62,6 +62,7 @@
       <nav class="gap">
         <ul class="nav nav-tabs">
           <li class="active"><a href="/datosPerfil" onclick="location='PerfilEdicion.html'" data-target="#datosPerfil" data-toggle="tab">Datos del perfil</a></li>
+          {% if players %}
           <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
               Jugadores asociados <span class="caret"></span>
@@ -72,6 +73,7 @@
               {% endfor %}
             </ul>
           </li>
+          {% endif %}
         </ul>
       </nav>
 
@@ -168,9 +170,25 @@
                   <div class="row">
                     <div class="col-xs-3">
                       <select class="form-control" id="language" name="language">
-                        <option value=""></option>
-                        <option value="es">Español</option>
-                        <option value="en">Inglés</option>
+                        {% if not lang %}
+                          <option value=""></option>
+                          <option value="es">Español</option>
+                          <option value="en">Inglés</option>
+                        {% else %}
+
+                          {% ifequal lang "es" %}
+                            
+                            <option value="es" checked>Español</option>
+                            <option value="en">Inglés</option>
+                            <option value=""></option>
+                          {% else %}
+                            <option value="en" checked>Inglés</option>
+                            <option value="es">Español</option>
+                            <option value=""></option>
+                          {% endifequal %}
+                          
+                        {% endif %}
+                        
                       </select>
                     </div>
                   </div>
@@ -251,7 +269,7 @@
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">No, cancela la operación</button>
-                        <button type="button" class="btn btn-danger">Sí, elimina mi cuenta</button>
+                        <button type="button" class="btn btn-danger"><a href="/eliminar-cuenta/?id={{user.id}}">Sí, elimina mi cuenta</a></button>
                       </div>
                     </div>
                   </div>
