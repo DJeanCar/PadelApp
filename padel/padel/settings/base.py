@@ -19,6 +19,7 @@ DJANGO_APPS = (
 LOCAL_APPS = (
 		'apps.users',
         'apps.torneos',
+        'apps.inscriptions',
 	)
 
 THIRD_PARTY_APPS = (
