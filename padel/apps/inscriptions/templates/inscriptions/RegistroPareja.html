@@ -50,7 +50,7 @@
         </div>
       </form>
 
-      <form id="formWithAccount" role="form" class="collapse in" method="POST" action="/inscribir-torneo/">{% csrf_token %}
+      <form id="formWithAccount" role="form" class="collapse" method="POST" action="/inscribir-torneo/">{% csrf_token %}
         {{ error }}
         <fieldset>
           <legend class="legendAsLabel">Dinos quién eres <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></legend>
@@ -309,7 +309,7 @@
     <script src="http://code.jquery.com/jquery.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/application.js' %}"></script>
+    <script src="{% static 'js/register.js' %}"></script>
     <script src="{% static 'js/jquery.placeholder.js' %}"></script>
 
     <script>
