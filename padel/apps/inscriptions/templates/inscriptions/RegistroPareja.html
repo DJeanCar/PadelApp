@@ -35,6 +35,8 @@
         crearte una cuenta en Padeleitor. Podrás utilizar esta cuenta para inscribirte posteriormente en otros torneos.
       </p>
 
+      {{ error }}
+
       <form class="gap">
         <div class="radio">
           <label>
@@ -71,9 +73,9 @@
             <div class="col-xs-3">
               <select class="form-control" id="category1" name="category" required="">
                 <option value=""></option>
-                <option value="M">Masculina</option>
-                <option value="F">Femenina</option>
-                <option value="X">Mixta</option>
+                {% for categoria in categorias %}
+                  <option value="{{ categoria.category.id }}">{{ categoria.category.name }}</option>
+                {% endfor %}
               </select>
             </div>
           </div>
@@ -82,7 +84,11 @@
           <label for="division1">División <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></label>
           <div class="row">
             <div class="col-xs-3">
-              <select class="form-control" id="division1" name="division" required=""></select>
+              <select class="form-control" id="division1" name="division" required="">
+                {% for division in divisiones %}
+                  <option value="{{ division.id }}">{{ division.name }}</option>
+                {% endfor %}
+              </select>
             </div>
           </div>
         </div>
@@ -91,9 +97,9 @@
           <div class="row">
             <div class="col-xs-3">
               <select class="form-control" id="level1" name="level" required="">
-                <option value="1" selected="selected">Alto</option>
-                <option value="2">Medio</option>
-                <option value="3">Bajo</option>
+                {% for nivel in niveles %}
+                  <option value="{{ nivel.nivel.id }}">{{ nivel.nivel.name }}</option>   
+                {% endfor %}
               </select>
             </div>
           </div>
@@ -129,6 +135,7 @@
               </div>
             </div>
           </div>
+          <input type="hidden" value="{{ object.id }}" name="id_competicion">
         </fieldset>
         <div class="text-center previousGap">
           <input type="hidden" name="slug" value="{{ object.urlTag }}">
@@ -136,7 +143,7 @@
         </div>
       </form>
 
-      <form id="formWithoutAccount" role="form" class="collapse" style="height: 0px;">
+      <form id="formWithoutAccount" role="form" class="collapse" style="height: 0px;" method="POST">{% csrf_token %}
         <div class="form-group">
           <label for="username2">Nombre de usuario <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></label>
           <div class="row">
@@ -239,10 +246,9 @@
           <div class="row">
             <div class="col-xs-3">
               <select class="form-control" id="category2" name="category" required="">
-                <option value=""></option>
-                <option value="M">Masculina</option>
-                <option value="F">Femenina</option>
-                <option value="X">Mixta</option>
+                {% for categoria in categorias %}
+                  <option value="{{ categoria.category.id }}">{{ categoria.category.name }}</option>
+                {% endfor %}
               </select>
             </div>
           </div>
@@ -251,7 +257,11 @@
           <label for="division2">División <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></label>
           <div class="row">
             <div class="col-xs-3">
-              <select class="form-control" id="division2" name="division" required=""></select>
+              <select class="form-control" id="division2" name="division" required="">
+                {% for division in divisiones %}
+                  <option value="{{ division.id }}">{{ division.name }}</option>
+                {% endfor %}
+              </select>
             </div>
           </div>
         </div>
@@ -260,9 +270,9 @@
           <div class="row">
             <div class="col-xs-3">
               <select class="form-control" id="level2" name="level" required="">
-                <option value="1" selected="selected">Alto</option>
-                <option value="2">Medio</option>
-                <option value="3">Bajo</option>
+                {% for nivel in niveles %}
+                  <option value="{{ nivel.nivel.id }}">{{ nivel.nivel.name }}</option>   
+                {% endfor %}
               </select>
             </div>
           </div>
@@ -300,7 +310,9 @@
           </div>
         </fieldset>
         <div class="text-center previousGap">
-          <button type="submit" class="btn btn-success btn-lg" onclick="location=&#39;RegistroParejaError.html&#39;">¡Inscríbeme en el torneo!</button>
+          <input type="hidden" value="{{ object.id }}" name="id_competicion">
+          <input type="hidden" name="slug" value="{{ object.urlTag }}">
+          <button type="submit" class="btn btn-success btn-lg">¡Inscríbeme en el torneo!</button>
         </div>
       </form>
     </div>

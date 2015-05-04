@@ -61,6 +61,7 @@ class Player(models.Model):
 	firstSurname = models.CharField(max_length=250)
 	secondSurname = models.CharField(max_length=250)
 	birth_date = models.DateField(null=True, blank=True)
+	email = models.EmailField(null=True, blank=True) # Agregado
 	phone = models.BigIntegerField(null=True, blank=True)
 	edad = models.IntegerField(null=True, blank=True)
 	language = models.CharField(max_length=50 ,null=True, blank=True,choices = languages)
