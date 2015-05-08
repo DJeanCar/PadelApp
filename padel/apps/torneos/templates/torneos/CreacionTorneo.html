@@ -55,6 +55,9 @@
               <h2 class="panel-title">Creación de un torneo</h2>
             </div>
             <div class="panel-body">
+              {% if creado %}
+                <h4>Torneo creado</h4>
+              {% endif %}
               <form id="createTournament" role="form" method="POST" enctype="multipart/form-data">{% csrf_token %}
                 <div class="row">
                   <div class="col-xs-4">
@@ -201,12 +204,12 @@
                 </div>
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox" id="includeLevel" name="includeLevel" value="yes">Los jugadores deben seleccionar su <strong>nivel</strong> en la inscripción
+                    {{ form.nivel_bool }}Los jugadores deben seleccionar su <strong>nivel</strong> en la inscripción
                   </label>
                 </div>
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox" id="includeDivision" name="includeDivision" value="yes">Los jugadores deben seleccionar la <strong>división</strong> en la inscripción
+                    {{ form.division_bool }}Los jugadores deben seleccionar la <strong>división</strong> en la inscripción
                   </label>
                 </div>
                 <div class="text-center previousGap">
@@ -246,7 +249,6 @@
                 url : '/tipo-competicion/',
                 type : 'get',
                 success : function (data) {
-                    console.log(data.tipo_competicion)
                     // Aqui tienen que mostrar los campos en el Html de acuerdo a la competicion
                     if (slug_competicion == "liga")
                       $("#fields").html(ligaFields);

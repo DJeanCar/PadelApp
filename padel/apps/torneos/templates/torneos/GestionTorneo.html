@@ -208,7 +208,7 @@
                           <div class="form-group">
                             <label for="priceLiga">Precio <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></label>
                             <div class="input-group">
-                              <input type="number" class="form-control" id="priceLiga" name="priceLiga" pattern="[0-9]+([\.|,][0-9]+)?" step="0.01" maxlength="" placeholder="Precio" required="" value="{{ price }}">
+                              <input type="number" class="form-control" id="priceLiga" name="priceLiga" pattern="[0-9]+([\.|,][0-9]+)?" step="0.01" maxlength="" placeholder="Precio" required="" value="{{ price|floatformat:2 }}">
                               <span class="input-group-addon">€</span>
                             </div>
                           </div>
@@ -222,13 +222,13 @@
                         <div class="col-xs-3">
                           <div class="form-group">
                             <label for="substitutionDateLiga">Fecha de sustitución <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></label>
-                            <input type="date" class="form-control" id="substitutionDateLiga" name="substitutionDateLiga" placeholder="dd/mm/aaaa" required="" value="{{ datosCompeticion.fecha_sustitucion|date:'o-m-j' }}">
+                            <input type="date" class="form-control" id="substitutionDateLiga" name="substitutionDateLiga" placeholder="dd/mm/aaaa" required="" value="{{ datosCompeticion.fecha_sustitucion|date:'o-m-d' }}">
                           </div>
                         </div>
                         <div class="col-xs-3">
                           <div class="form-group">
                             <label for="inscriptionLimitDateLiga">Fecha límite de inscripción <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></label>
-                            <input type="date" class="form-control" id="inscriptionLimitDateLiga" name="inscriptionLimitDateLiga" placeholder="dd/mm/aaaa" required="" value="{{ datosCompeticion.fecha_limite|date:'o-m-j' }}">
+                            <input type="date" class="form-control" id="inscriptionLimitDateLiga" name="inscriptionLimitDateLiga" placeholder="dd/mm/aaaa" required="" value="{{ datosCompeticion.fecha_limite|date:'o-m-d' }}">
                           </div>
                         </div>
                       </div>
@@ -262,8 +262,9 @@
                                   {% for cat in categories %}
                                     {% ifequal cat.name object.categoria.name  %}
                                       <option value="{{cat.id}}" selected>{{ cat.name }}</option>
-                                    {% endifequal %}
+                                      {% else %}
                                     <option value="{{cat.id}}">{{ cat.name }}</option>
+                                    {% endifequal %}
                                   {% endfor %}
                                 </select>
                               </div>
@@ -325,8 +326,10 @@
                                   {% for div in divisiones %}
                                     {% ifequal div.name object.clasificacionNivel.name  %}
                                       <option value="{{ div.id }}" selected="">{{ div.name }}</option>
-                                    {% endifequal %}
+                                      {% else %}
                                     <option value="{{ div.id }}">{{ div.name }}</option>
+                                      
+                                    {% endifequal %}
                                   {% endfor %}
                                 </select>
                               </div>

@@ -103,6 +103,9 @@ class UserProfileView(LoginRequiredMixin, FormView):
 		context['players'] = Player.objects.filter(is_active = False, user=self.request.user)
 		player_active = Player.objects.get(user = self.request.user, is_active=True)
 		context['lang'] = player_active.language
+		if self.request.session.get('update'):
+			context['update'] = True
+			self.request.session['update'] = False
 		return context
 
 	def post(self, request, *args, **kwargs):
@@ -112,6 +115,7 @@ class UserProfileView(LoginRequiredMixin, FormView):
 		}
 		if form.is_valid():
 			# Usuario
+			reset = False
 			user = User.objects.get(email = request.user.email)
 			if request.POST['username'] != request.user.username:
 				if not User.objects.filter(username = request.POST['username']):
@@ -125,6 +129,9 @@ class UserProfileView(LoginRequiredMixin, FormView):
 					dic['email_error'] = "Este email ya existe"
 			if request.POST['password']:
 				user.set_password(request.POST['password'])
+				reset = True
+				username = request.user.username
+				password = request.POST['password']
 			if request.FILES.get('image'):
 				user.avatar = request.FILES['image']
 			user.save()
@@ -153,6 +160,12 @@ class UserProfileView(LoginRequiredMixin, FormView):
 			medios.sms = bool(request.POST.get('sms'))
 			medios.whatsapp = bool(request.POST.get('whatsapp'))
 			medios.save()
+			dic["update"] = True
+			if reset:
+				logout(request)
+				Login(request, username, password)
+				request.session['update'] = True
+				return redirect('/perfil/')
 		return render(request, 'users/PerfilEdicion.html', dic)
 
 	def get_initial(self):

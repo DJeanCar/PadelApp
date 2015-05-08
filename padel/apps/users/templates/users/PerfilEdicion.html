@@ -82,6 +82,9 @@
         <section class="tab-pane fade in active" id="datosPerfil">
           <div class="row">
             <div class="col-md-10">
+                {% if update %}
+                  <h3>Datos Actualizados</h3>
+                {% endif %}
 
               <form id="accountForm" role="form" method="POST" enctype="multipart/form-data">{% csrf_token %}
                 <div class="form-group">

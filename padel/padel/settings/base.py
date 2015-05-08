@@ -47,7 +47,7 @@ WSGI_APPLICATION = 'padel.wsgi.application'
 LANGUAGE_CODE = 'es-pe'
 TIME_ZONE = 'UTC'
 USE_I18N = True
-USE_L10N = True
+USE_L10N = False
 USE_TZ = True
 
 MEDIA_ROOT = BASE_DIR.child('media')
@@ -68,6 +68,7 @@ SOCIAL_AUTH_PIPELINE = (
     'social.pipeline.social_auth.social_uid',
     'social.pipeline.social_auth.auth_allowed',
     'social.pipeline.social_auth.social_user',
+    'social.pipeline.social_auth.associate_by_email',
     'social.pipeline.user.create_user',
     'social.pipeline.social_auth.associate_user',
     'social.pipeline.social_auth.load_extra_data',

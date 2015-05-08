@@ -18,6 +18,9 @@ class CreateTorneoView(LoginRequiredMixin, FormView):
 	def get_context_data(self, **kwargs):
 		context = super(CreateTorneoView, self).get_context_data(**kwargs)
 		context['tipocompeticion'] = TipoCompeticion.objects.all()
+		if self.request.session.get("creado"):
+			context['creado'] = True
+			self.request.session['creado'] = False
 		return context
 
 	def form_valid(self, form):
@@ -106,6 +109,7 @@ class CreateTorneoView(LoginRequiredMixin, FormView):
 							break
 					# Aqui hay que hacer otro for para las divisiones de cada categoria
 		#################################
+		self.request.session['creado'] = True
 		return super(CreateTorneoView, self).form_valid(form)
 
 	def form_invalid(self, form):
