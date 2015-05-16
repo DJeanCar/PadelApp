@@ -8,12 +8,11 @@ from apps.users.models import User, Player, CommunicationOption
 from .models import Equipo, JugadorxEquipo
 
 
-class InscripcionTorneo(LoginRequiredMixin, DetailView):
+class InscripcionTorneo(DetailView):
 
 	model = Competicion
 	slug_field = 'urlTag'
 	template_name = 'inscriptions/RegistroPareja.html'
-	login_url = '/login/'
 
 	def get_context_data(self, **kwargs):
 		context = super(InscripcionTorneo, self).get_context_data(**kwargs)
@@ -89,7 +88,7 @@ class InscripcionTorneo(LoginRequiredMixin, DetailView):
 				jugador = player,
 				equipo = equipo,
 			)
-		return redirect('/falta-definir-esta-url/')
+		return redirect('/inscrito/')
 
 class UserInscription(TemplateView):
 
@@ -121,4 +120,8 @@ class UserInscription(TemplateView):
 				jugador = player,
 				equipo = equipo,
 			)
-		return redirect('/falta-definir-esta-url/')
+		return redirect('/inscrito/')
+
+class InscritoFelicidades(TemplateView):
+
+	template_name = 'inscriptions/inscripcionOK.html'

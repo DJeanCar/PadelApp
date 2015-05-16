@@ -3,12 +3,12 @@ from django.views.generic import FormView, TemplateView, UpdateView
 from django.contrib.auth import logout
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.http import Http404
+from random import choice
 from braces.views import LoginRequiredMixin
 
 from .forms import LoginForm, UserCreationForm, UserUpdateForm, EditPlayerForm
 from .models import User, Player, CommunicationOption, MediosComunication
 from .functions import Login, send_email
-
 
 class HomeView(LoginRequiredMixin, TemplateView):
 
@@ -21,10 +21,24 @@ class LoginView(FormView):
 	form_class = LoginForm
 	success_url = reverse_lazy('home')
 
-	def form_valid(self, form):
-		Login(self.request, form.cleaned_data['email'], form.cleaned_data['password'])
-		return super(LoginView, self).form_valid(form)
+	def make_random_password(self, length=10, allowed_chars='abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789'):
+		return ''.join([choice(allowed_chars) for i in range(length)])
 
+	def post(self, request, *args, **kwargs):
+		if self.request.POST.get("email_recuperar"):
+			try:
+				usuario = User.objects.get(email=request.POST['email_recuperar'])
+				password = self.make_random_password()
+				# usuario.set_password(password)
+				# usuario.save()
+				# enviar_email_acceso(usuario.username,password,usuario.email) Falta el Email
+				mensaje = "Hemos enviado tus datos de acceso a  %s" % request.POST['email_recuperar']
+			except:
+				mensaje = "Email %s no registrado" & request.POST['email_recuperar']
+			return render(request,'users/login.html',{'mensaje' : mensaje})
+		else:
+			Login(request, request.POST['email'], request.POST['password'])
+		return super(LoginView, self).post(request, *args, **kwargs)
 
 class RegisterUserView(FormView):
 

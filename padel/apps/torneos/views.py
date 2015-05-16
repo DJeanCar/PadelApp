@@ -23,6 +23,102 @@ class CreateTorneoView(LoginRequiredMixin, FormView):
 			self.request.session['creado'] = False
 		return context
 
+	def post(self, request, *args, **kwargs):
+		form = CrearTorneoForm(request.POST, request.FILES)
+		if form.is_valid():
+			if form.cleaned_data.get('ClasificacionNivel'):
+				clasificacionNivel = form.cleaned_data.get('ClasificacionNivel')
+			else:
+				# Aqui tengo que guardar los niveles creados por el usuario
+				clasificacionNivel = ClasificacionNivel.objects.create(
+						user = self.request.user,
+						name = self.request.POST['levelClassificationName']
+					)
+				for i in range(1,10):
+					if "levelName_%s" % i in self.request.POST:
+						try:
+							nivel = Nivel.objects.get(name__iexact = self.request.POST['levelName_%s' % i])
+						except:
+							Nivel.objects.create(name = self.request.POST['levelName_%s' % i])
+					else:
+						break
+			###########################
+			####################CATEGORIA
+			if form.cleaned_data.get('categoryClassification'):
+				clasificacionCategoria = form.cleaned_data.get('categoryClassification')
+			else:
+				clasificacionCategoria = ClasificacionCategoria.objects.create(
+						user = self.request.user,
+						name = self.request.POST['categoryClassificationName']
+					)
+				for i in range(1,10):
+					if "categoryName_%s" % i in self.request.POST:
+						try:
+							categoria = Categoria.objects.get(name__iexact = self.request.POST['categoryName_%s' % i])
+						except:
+							categoria = Categoria.objects.create(name = self.request.POST['categoryName_%s' % i])
+						ClasificacionCategoria_Categoria.objects.create(
+								clas_cat = clasificacionCategoria,
+								category = categoria,
+								orden = i
+							)
+					else:
+						break
+			########################
+			competicion = Competicion.objects.create(
+					categoria = clasificacionCategoria,
+					admin = Player.objects.get(user = self.request.user),
+					tipoCompeticion = form.cleaned_data['tournamentType'],
+					tipoInscripcion = form.cleaned_data['tipoInscripcion'],
+					clasificacionNivel = clasificacionNivel,
+					name = form.cleaned_data['name'],
+					urlTag = form.cleaned_data['urlTag'],
+					logo = form.cleaned_data['logo'],
+					fecha_inicio = form.cleaned_data['fecha_inicio'],
+					fecha_fin = form.cleaned_data['fecha_fin'],
+					price = form.cleaned_data['price'],
+					division_bool = form.cleaned_data['division_bool'],
+					nivel_bool = form.cleaned_data['nivel_bool']
+				)
+			#El de abajo si funca
+			DatosTipoCompeticion.objects.create(
+					tipoCompeticion = form.cleaned_data['tournamentType'],
+					competicion = competicion,
+					min_jugadores = form.cleaned_data['min_jugadores'],
+					max_jugadores = form.cleaned_data['max_jugadores'],
+					min_equipos = form.cleaned_data['min_equipos'],
+					max_equipos = form.cleaned_data['max_equipos'],
+					num_cuenta = form.cleaned_data['num_cuenta'],
+					fecha_sustitucion = form.cleaned_data['fecha_sustitucion'],
+					fecha_limite = form.cleaned_data['fecha_limite'],
+					preferencia_horaria = self.request.POST['timePreference']
+				)
+			##################DIVISIONES
+			clas_orden = ClasificacionCategoria_Categoria.objects.filter(clas_cat = clasificacionCategoria).order_by('orden')
+			if "div-1Name_1" in self.request.POST:
+				# Aqui se hacen las divisiones
+				for clas in clas_orden:
+					if "div-%sName_1" % clas.orden in self.request.POST:
+						for i in range(1,10):
+							print i
+							if "div-%sName_%s" % (clas.orden, i) in self.request.POST:
+								Division.objects.create(
+										categoria = clas.category,
+										competicion = competicion,
+										name = self.request.POST["div-%sName_%s" % (clas.orden, i)]
+									)
+							else:
+								print "Llegue aqui"
+								break
+						# Aqui hay que hacer otro for para las divisiones de cada categoria
+			#################################
+			error = False
+			form = CrearTorneoForm()
+			return render(request, "torneos/CreacionTorneo.html", {'form':form, 'error':error, 'creado':True})
+		else:
+			error = True
+			return render(request, "torneos/CreacionTorneo.html", {'form':form,  'error':error,})
+
 	def form_valid(self, form):
 		################# Nivel 
 		if form.cleaned_data.get('ClasificacionNivel'):
@@ -160,6 +256,7 @@ class EditarTorneoView(DetailView):
 		return context
 
 	def post(self, request, *args, **kwargs):
+		print request.POST
 		competicion = self.get_object()
 		datos_competicion = DatosTipoCompeticion.objects.get(competicion = competicion)
 		if Competicion.objects.filter(urlTag = request.POST['url']).exists():
@@ -249,4 +346,22 @@ class EditarTorneoView(DetailView):
 				else:
 					break
 		########################
+		##################DIVISIONES
+		clas_orden = ClasificacionCategoria_Categoria.objects.filter(clas_cat = clasificacionCategoria).order_by('orden')
+		if "div-1Name_1" in self.request.POST:
+			# Aqui se hacen las divisiones
+			for clas in clas_orden:
+				if "div-%sName_1" % clas.orden in self.request.POST:
+					for i in range(1,10):
+						if "div-%sName_%s" % (clas.orden, i) in self.request.POST:
+							Division.objects.create(
+									categoria = clas.category,
+									competicion = competicion,
+									name = self.request.POST["div-%sName_%s" % (clas.orden, i)]
+								)
+						else:
+							break
+					# Aqui hay que hacer otro for para las divisiones de cada categoria
+		#################################
+
 		return redirect('/editar-torneo/%s/' % competicion.urlTag)

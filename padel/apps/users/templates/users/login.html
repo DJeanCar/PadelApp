@@ -26,6 +26,9 @@
         <h1 class="h3 signin-heading text-center">Padeleitor</h1>
 
         <div id="signin" class="collapse in">
+          {% if mensaje %}
+            {{ mensaje }}
+          {% endif %}
           <form id="signinForm" role="form" method="POST">{% csrf_token %}
             <h2 class="h4 signin-heading text-center">Entra en tu cuenta</h2>
             {{ form.email }}
@@ -60,9 +63,9 @@
         </div>
 
         <div id="remember" class="collapse">
-          <form id="rememberForm" role="form">
+          <form id="rememberForm" role="form" method="POST">{% csrf_token %}
             <h2 class="h4 signin-heading text-center">Generar una contraseña nueva</h2>
-            <input type="text" class="form-control" placeholder="Email" required>
+            <input type="email" class="form-control" placeholder="Email" required name="email_recuperar">
             <p class="help-block">Si olvidaste tu contraseña, rellena este formulario para que te enviemos una nueva contraseña a tu cuenta de correo electrónico. Te aconsejamos que la cambies en cuanto la recibas.</p>
             <button class="btn btn-lg btn-success btn-block" type="submit">Nueva contraseña</button>
           </form>
