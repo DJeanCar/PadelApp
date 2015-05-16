@@ -80,6 +80,7 @@
             </div>
           </div>
         </div>
+        {% if object.division_bool %}
         <div class="form-group">
           <label for="division1">División <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></label>
           <div class="row">
@@ -92,6 +93,9 @@
             </div>
           </div>
         </div>
+          
+        {% endif %}
+        {% if object.nivel_bool %}
         <div class="form-group">
           <label for="level1">Nivel <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></label>
           <div class="row">
@@ -103,8 +107,10 @@
               </select>
             </div>
           </div>
+          
           <p class="help-block">Para evaluar el nivel, consulta <a href="http://cespare.no-ip.org/diseno/Navegable/RegistroPareja.html#">nuestras indicaciones</a>.</p>
         </div>
+        {% endif %}
         <div class="form-group">
           <label for="timePreference1">Preferencia horaria</label>
           <div class="row">
@@ -253,6 +259,7 @@
             </div>
           </div>
         </div>
+        {% if object.division_bool %}
         <div class="form-group">
           <label for="division2">División <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></label>
           <div class="row">
@@ -265,6 +272,10 @@
             </div>
           </div>
         </div>
+          
+        {% endif %}
+        {% if object.nivel_bool %}
+          
         <div class="form-group">
           <label for="level2">Nivel <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></label>
           <div class="row">
@@ -278,6 +289,7 @@
           </div>
           <p class="help-block">Para evaluar el nivel, consulta <a href="http://cespare.no-ip.org/diseno/Navegable/RegistroPareja.html#">nuestras indicaciones</a>.</p>
         </div>
+        {% endif %}
         <div class="form-group">
           <label for="timePreference2">Preferencia horaria</label>
           <div class="row">
