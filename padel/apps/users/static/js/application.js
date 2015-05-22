@@ -45,6 +45,13 @@ $(document).ready(function() {
       this.size = 4;
   });
 
+  //Enable category select before submitting create tournament form
+  $('#createTournament').on('submit', function(e){
+    e.preventDefault();
+    $("#categoryClassification").prop("disabled", false);
+    this.submit();
+  });
+
   //Check the game results
   $("#resultForm").submit(function( event ) {
     var errorMessage = "";
@@ -432,10 +439,10 @@ function createDivisions() {
     //Show divisions
     $("#divisions").collapse('show');
     //Disable changes in categories
-    // $("#categoryClassification").prop("disabled", true);
+    $("#categoryClassification").prop("disabled", true);
     $("#newCategoryClassificationButton").prop("disabled", true);
-    // $("#categoryClassificationName").prop("disabled", true);
-    // $("input[id^='categoryName_']").prop("disabled", true);
+    $("#categoryClassificationName").prop("readonly", true);
+    $("input[id^='categoryName_']").prop("readonly", true);
     $("button[id^='categoryButton_']").prop("disabled", true);
 
     var categories = [];
@@ -491,8 +498,8 @@ function enableCategories() {
     //Enable changes in categories
     $("#categoryClassification").prop("disabled", false);
     $("#newCategoryClassificationButton").prop("disabled", false);
-    $("#categoryClassificationName").prop("disabled", false);
-    $("input[id^='categoryName_']").prop("disabled", false);
+    $("#categoryClassificationName").prop("readonly", false);
+    $("input[id^='categoryName_']").prop("readonly", false);
     $("button[id^='categoryButton_']").prop("disabled", false);
     //Drop divisions
     $("#categoriesTableBody").empty();
