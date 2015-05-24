@@ -23,6 +23,103 @@
       <div class="page-header text-center">
         <h1>Inscripción en el Torneo {{ object.name }}</h1>
       </div>
+    {% if user.is_authenticated %}
+      <p class="lead lessImportant">
+        Ya sabemos quién eres, así que simplemente danos unos datos adicionales sobre el torneo para efectuar tu inscripción.
+      </p>
+      <form id="formWithAccount" role="form" method="POST" action="/inscribir-torneo/">{% csrf_token %}
+        {{ error }}
+        <div class="form-group">
+          <label for="username1">Te vas a inscribir con este usuario</label>
+          <div class="row">
+            <div class="col-xs-3">
+              <input type="text" class="form-control" id="username1" name="username" value="{{ user.username }}" placeholder="Nombre de usuario" disabled="disabled">
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="category1">Categoría <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></label>
+          <div class="row">
+            <div class="col-xs-3">
+              <select class="form-control" id="category1" name="category" required="">
+                <option value=""></option>
+                {% for categoria in categorias %}
+                  <option value="{{ categoria.category.id }}">{{ categoria.category.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+        </div>
+        {% if object.division_bool %}
+        <div class="form-group">
+          <label for="division1">División <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></label>
+          <div class="row">
+            <div class="col-xs-3">
+              <select class="form-control" id="division1" name="division" required="">
+                {% for division in divisiones %}
+                  <option value="{{ division.id }}">{{ division.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+        </div>
+
+        {% endif %}
+        {% if object.nivel_bool %}
+        <div class="form-group">
+          <label for="level1">Nivel <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></label>
+          <div class="row">
+            <div class="col-xs-3">
+              <select class="form-control" id="level1" name="level" required="">
+                {% for nivel in niveles %}
+                  <option value="{{ nivel.nivel.id }}">{{ nivel.nivel.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+
+          <p class="help-block">Para evaluar el nivel, consulta <a href="http://cespare.no-ip.org/diseno/Navegable/RegistroPareja.html#">nuestras indicaciones</a>.</p>
+        </div>
+        {% endif %}
+        <div class="form-group">
+          <label for="timePreference1">Preferencia horaria</label>
+          <div class="row">
+            <div class="col-xs-10">
+              <textarea class="form-control" id="timePreference1" name="timePreference" maxlength="" placeholder="Explica la preferencia horaria para jugar" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+        <fieldset id="members_1">
+          <legend class="legendAsLabel previousGap">Añade a tu pareja</legend>
+          <div id="member_1_1" class="form-group row">
+            <div class="col-xs-12">
+              <div class="custom-input-group">
+                <div class="custom-input-addon nameWidth">
+                  <label class="sr-only" for="memberName_1_1">Nombre</label>
+                  <input type="text" class="form-control" id="memberName_1_1" name="memberName_1_1" maxlength="" placeholder="Nombre" required="">
+                </div>
+                <div class="custom-input-addon">
+                  <label class="sr-only" for="memberSurname1_1_1">Primer apellido</label>
+                  <input type="text" class="form-control noBorderRadius" id="memberSurname1_1_1" name="memberSurname1_1_1" maxlength="" placeholder="Primer apellido" required="">
+                </div>
+                <div class="custom-input-addon">
+                  <label class="sr-only" for="memberSurname2_1_1">Segundo apellido</label>
+                  <input type="text" class="form-control noBorderRadius" id="memberSurname2_1_1" name="memberSurname2_1_1" maxlength="" placeholder="Segundo apellido" required="">
+                </div>
+                <label class="sr-only" for="memberEmail_1_1">Correo electrónico</label>
+                <input type="text" class="form-control separator" id="memberEmail_1_1" name="memberEmail_1_1" maxlength="" placeholder="Correo electrónico">
+              </div>
+            </div>
+          </div>
+          <input type="hidden" value="{{ object.id }}" name="id_competicion">
+        </fieldset>
+        <div class="text-center previousGap">
+          <input type="hidden" name="slug" value="{{ object.urlTag }}">
+          <button type="submit" class="btn btn-success btn-lg">¡Inscríbeme en el torneo!</button>
+        </div>
+      </form>
+
+    {% else %}
       <p class="lead">
         ¿Dispones ya de una cuenta en Padeleitor?
       </p>
@@ -93,7 +190,7 @@
             </div>
           </div>
         </div>
-          
+
         {% endif %}
         {% if object.nivel_bool %}
         <div class="form-group">
@@ -102,12 +199,12 @@
             <div class="col-xs-3">
               <select class="form-control" id="level1" name="level" required="">
                 {% for nivel in niveles %}
-                  <option value="{{ nivel.nivel.id }}">{{ nivel.nivel.name }}</option>   
+                  <option value="{{ nivel.nivel.id }}">{{ nivel.nivel.name }}</option>
                 {% endfor %}
               </select>
             </div>
           </div>
-          
+
           <p class="help-block">Para evaluar el nivel, consulta <a href="http://cespare.no-ip.org/diseno/Navegable/RegistroPareja.html#">nuestras indicaciones</a>.</p>
         </div>
         {% endif %}
@@ -272,17 +369,17 @@
             </div>
           </div>
         </div>
-          
+
         {% endif %}
         {% if object.nivel_bool %}
-          
+
         <div class="form-group">
           <label for="level2">Nivel <sup><span class="glyphicon glyphicon-asterisk text-danger"></span></sup><span class="sr-only">Obligatorio</span></label>
           <div class="row">
             <div class="col-xs-3">
               <select class="form-control" id="level2" name="level" required="">
                 {% for nivel in niveles %}
-                  <option value="{{ nivel.nivel.id }}">{{ nivel.nivel.name }}</option>   
+                  <option value="{{ nivel.nivel.id }}">{{ nivel.nivel.name }}</option>
                 {% endfor %}
               </select>
             </div>
@@ -327,6 +424,7 @@
           <button type="submit" class="btn btn-success btn-lg">¡Inscríbeme en el torneo!</button>
         </div>
       </form>
+    {% endif %}
     </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -343,6 +441,6 @@
         X: [{val: 1, text: 'X1'}]
       };
     </script>
-  
 
-</body></html>
+  </body>
+</html>
