@@ -100,7 +100,6 @@ class CreateTorneoView(LoginRequiredMixin, FormView):
 				for clas in clas_orden:
 					if "div-%sName_1" % clas.orden in self.request.POST:
 						for i in range(1,10):
-							print i
 							if "div-%sName_%s" % (clas.orden, i) in self.request.POST:
 								Division.objects.create(
 										categoria = clas.category,
@@ -108,7 +107,6 @@ class CreateTorneoView(LoginRequiredMixin, FormView):
 										name = self.request.POST["div-%sName_%s" % (clas.orden, i)]
 									)
 							else:
-								print "Llegue aqui"
 								break
 						# Aqui hay que hacer otro for para las divisiones de cada categoria
 			#################################
@@ -117,7 +115,8 @@ class CreateTorneoView(LoginRequiredMixin, FormView):
 			return render(request, "torneos/CreacionTorneo.html", {'form':form, 'error':error, 'creado':True})
 		else:
 			error = True
-			return render(request, "torneos/CreacionTorneo.html", {'form':form,  'error':error,})
+			time_preference = request.POST['timePreference']
+			return render(request, "torneos/CreacionTorneo.html", {'form':form,  'error':error, 'time_preference':time_preference})
 
 	def form_valid(self, form):
 		################# Nivel 
@@ -162,7 +161,7 @@ class CreateTorneoView(LoginRequiredMixin, FormView):
 		########################
 		competicion = Competicion.objects.create(
 				categoria = clasificacionCategoria,
-				admin = Player.objects.get(user = self.request.user),
+				admin = Player.objects.filter(user = self.request.user).last(),
 				tipoCompeticion = form.cleaned_data['tournamentType'],
 				tipoInscripcion = form.cleaned_data['tipoInscripcion'],
 				clasificacionNivel = clasificacionNivel,
@@ -312,6 +311,8 @@ class EditarTorneoView(DetailView):
 					user = self.request.user,
 					name = self.request.POST['levelClassificationName']
 				)
+			competicion.clasificacionNivel = clasificacionNivel
+			competicion.save()
 			for i in range(1,10):
 				if "levelName_%s" % i in self.request.POST:
 					try:

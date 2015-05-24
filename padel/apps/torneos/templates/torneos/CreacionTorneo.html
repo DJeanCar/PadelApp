@@ -262,6 +262,105 @@
              });
         }
 
+{% if error %}
+var ligaFields =
+'<div class=\"row\"> \
+  <div class=\"col-xs-3\"> \
+    <div class=\"form-group\"> \
+      <label for=\"minPlayers\">Mínimo de jugadores <sup><span class=\"glyphicon glyphicon-asterisk text-danger\"></span></sup><span class=\"sr-only\">Obligatorio</span></label> \
+      <div class=\"row\"> \
+        <div class=\"col-xs-5\"> \
+          {{ form.min_jugadores.errors }} \
+          {{ form.min_jugadores }} \
+        </div> \
+      </div> \
+    </div> \
+  </div> \
+  <div class=\"col-xs-3\"> \
+    <div class=\"form-group\"> \
+      <label for=\"maxPlayers\">Máximo de jugadores <sup><span class=\"glyphicon glyphicon-asterisk text-danger\"></span></sup><span class=\"sr-only\">Obligatorio</span></label> \
+      <div class=\"row\"> \
+        <div class=\"col-xs-5\"> \
+          {{ form.max_jugadores.errors }} \
+          {{ form.max_jugadores }} \
+        </div> \
+      </div> \
+    </div> \
+  </div> \
+  <div class=\"col-xs-3\"> \
+    <div class=\"form-group\"> \
+      <label for=\"minTeams\">Mínimo de equipos <sup><span class=\"glyphicon glyphicon-asterisk text-danger\"></span></sup><span class=\"sr-only\">Obligatorio</span></label> \
+      <div class=\"row\"> \
+        <div class=\"col-xs-5\"> \
+          {{ form.min_equipos.errors }} \
+          {{ form.min_equipos }} \
+        </div> \
+      </div> \
+    </div> \
+  </div> \
+  <div class=\"col-xs-3\"> \
+    <div class=\"form-group\"> \
+      <label for=\"maxTeams\">Máximo de equipos <sup><span class=\"glyphicon glyphicon-asterisk text-danger\"></span></sup><span class=\"sr-only\">Obligatorio</span></label> \
+      <div class=\"row\"> \
+        <div class=\"col-xs-5\"> \
+          {{ form.max_equipos.errors }} \
+          {{ form.max_equipos }} \
+        </div> \
+      </div> \
+    </div> \
+  </div> \
+</div> \
+<div class=\"row\"> \
+  <div class=\"col-xs-3\"> \
+    <div class=\"form-group\"> \
+      <label for=\"price\">Precio <sup><span class=\"glyphicon glyphicon-asterisk text-danger\"></span></sup><span class=\"sr-only\">Obligatorio</span></label> \
+      <div class=\"input-group\"> \
+        {{ form.price.errors }} \
+        {{ form.price }} \
+        <span class=\"input-group-addon\">&euro;</span> \
+      </div> \
+    </div> \
+  </div> \
+  <div class=\"col-xs-3\"> \
+    <div class=\"form-group\"> \
+      <label for=\"account\">Número de cuenta <sup><span class=\"glyphicon glyphicon-asterisk text-danger\"></span></sup><span class=\"sr-only\">Obligatorio</span></label> \
+        {{ form.num_cuenta.errors }} \
+        {{ form.num_cuenta }} \
+    </div> \
+  </div> \
+  <div class=\"col-xs-3\"> \
+    <div class=\"form-group\"> \
+      <label for=\"substitutionDate\">Fecha de sustitución <sup><span class=\"glyphicon glyphicon-asterisk text-danger\"></span></sup><span class=\"sr-only\">Obligatorio</span></label> \
+        {{ form.fecha_sustitucion.errors }} \
+        {{ form.fecha_sustitucion }} \
+    </div> \
+  </div> \
+  <div class=\"col-xs-3\"> \
+    <div class=\"form-group\"> \
+      <label for=\"inscriptionLimitDate\">Fecha límite de inscripción <sup><span class=\"glyphicon glyphicon-asterisk text-danger\"></span></sup><span class=\"sr-only\">Obligatorio</span></label> \
+        {{ form.fecha_limite.errors }} \
+        {{ form.fecha_limite }} \
+    </div> \
+  </div> \
+</div> \
+<div class=\"row\"> \
+  <div class=\"col-xs-6\"> \
+    <div class=\"form-group\"> \
+      <label for=\"logo\">Logo de la competición</label> \
+      {{ form.logo.errors }} \
+      {{ form.logo }}  \
+    </div> \
+  </div> \
+  <div class=\"col-xs-6\"> \
+    <div class=\"form-group\"> \
+      <label for=\"timePreference\">Preferencia horaria</label> \
+      <textarea class=\"form-control\" id=\"timePreference\" name=\"timePreference\" maxlength=\"\" placeholder=\"Explica la preferencia horaria para jugar\" rows=\"3\" >{{ time_preference }}</textarea> \
+    </div> \
+  </div> \
+</div>';
+
+{% else %}
+
 var ligaFields =
 '<div class=\"row\"> \
   <div class=\"col-xs-3\"> \
@@ -357,6 +456,8 @@ var ligaFields =
     </div> \
   </div> \
 </div>';
+{% endif %}        
+
 
 var yosoloFields =
 "<div class=\"row\"> \
