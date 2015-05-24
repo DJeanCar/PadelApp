@@ -33,24 +33,25 @@ class InscripcionTorneo(DetailView):
 		return context
 
 	def post(self, request, *args, **kwargs):
-		if User.objects.filter(username = request.POST['username']).exists():
-			# Error en el username
-			return redirect('/inscripcion/%s/?error=username' % request.POST['slug'])
-		if User.objects.filter(email = request.POST['email']).exists():
-			# Error en el email
-			return redirect('/inscripcion/%s/?error=email' % request.POST['slug'])
-		if not request.POST['password'] == request.POST['repeatPassword']:
-			# Error en los password
-			return redirect('/inscripcion/%s/?error=password' % request.POST['slug'])
-		######### Aqui esta mall!! :/
-		user = User.objects.create(
-				username = request.POST['username'],
-				email = request.POST['email'],
-				password = request.POST['password']
-			)
-		user.set_password(user.password)
-		user.save()
-		player = Player.objects.create(
+		if not request.user.is_authenticated():
+			if User.objects.filter(username = request.POST['username']).exists():
+				# Error en el username
+				return redirect('/inscripcion/%s/?error=username' % request.POST['slug'])
+			if User.objects.filter(email = request.POST['email']).exists():
+				# Error en el email
+				return redirect('/inscripcion/%s/?error=email' % request.POST['slug'])
+			if not request.POST['password'] == request.POST['repeatPassword']:
+				# Error en los password
+				return redirect('/inscripcion/%s/?error=password' % request.POST['slug'])
+			######### Aqui esta mall!! :/
+			user = User.objects.create(
+					username = request.POST['username'],
+					email = request.POST['email'],
+					password = request.POST['password']
+				)
+			user.set_password(user.password)
+			user.save()
+			player = Player.objects.create(
 				user = user,
 				first_name = request.POST['name'],
 				firstSurname = request.POST['surname1'],
@@ -59,6 +60,8 @@ class InscripcionTorneo(DetailView):
 				phone = request.POST['phone'],
 				is_active = True
 			)
+		else:
+			user = request.user
 		if 'notifications' in request.POST:
 			CommunicationOption.objects.create(
 					user = user,
