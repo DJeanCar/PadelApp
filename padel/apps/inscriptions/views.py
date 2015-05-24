@@ -1,5 +1,8 @@
+import json
 from django.shortcuts import render, redirect
 from django.views.generic import DetailView, TemplateView
+from django.http import JsonResponse, HttpResponse
+from django.core import serializers
 
 from braces.views import LoginRequiredMixin
 
@@ -125,3 +128,11 @@ class UserInscription(TemplateView):
 class InscritoFelicidades(TemplateView):
 
 	template_name = 'inscriptions/inscripcionOK.html'
+
+
+class GetDivision(TemplateView):
+
+	def get(self, request, *args, **kwargs):
+		divisiones = Division.objects.filter(categoria__id = request.GET['cat_id'])
+		data = serializers.serialize('json', divisiones)
+		return HttpResponse(data, content_type="application/json")
