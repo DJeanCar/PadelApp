@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Inscripción en Torneo XXX</title>
+    <title>Inscripción en Torneo {{ object.name }}</title>
     {% load static from staticfiles %}
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" media="screen">
     <link href="{% static 'css/register.css' %}" rel="stylesheet" media="screen">
@@ -33,7 +33,7 @@
           <label for="username1">Te vas a inscribir con este usuario</label>
           <div class="row">
             <div class="col-xs-3">
-              <input type="text" class="form-control" id="username1" name="username" value="{{ user.username }}" placeholder="Nombre de usuario" disabled="disabled">
+              <input type="text" class="form-control" id="username1" name="username" value="{{ user.username }}" placeholder="Nombre de usuario" readonly="readonly">
             </div>
           </div>
         </div>
@@ -181,9 +181,7 @@
           <div class="row">
             <div class="col-xs-3">
               <select class="form-control" id="division1" name="division" required="">
-                {% for division in divisiones %}
-                  <option value="{{ division.id }}">{{ division.name }}</option>
-                {% endfor %}
+                  <option value=""></option>
               </select>
             </div>
           </div>
@@ -360,9 +358,7 @@
           <div class="row">
             <div class="col-xs-3">
               <select class="form-control" id="division2" name="division" required="">
-                {% for division in divisiones %}
-                  <option value="{{ division.id }}">{{ division.name }}</option>
-                {% endfor %}
+                  <option value=""></option>
               </select>
             </div>
           </div>
@@ -439,30 +435,27 @@
         X: [{val: 1, text: 'X1'}]
       };
 
-      $("#category1").on("change", function(){
+      $("select[name^='category']").change(function() {
         var cat_id = $(this).val();
-        $.ajax({
-          data : { 'cat_id' : cat_id},
-          url : '/traer-divisiones/',
-          type : 'get',
-          async: false,
-          success : function (data) {
-            console.log(data);
-          }
-        });
-      });
-
-      $("#category2").on("change", function(){
-        var cat_id = $(this).val();
-        $.ajax({
-          data : { 'cat_id' : cat_id},
-          url : '/traer-divisiones/',
-          type : 'get',
-          async: false,
-          success : function (data) {
-            console.log(data);
-          }
-        });
+        var divisionSelect = $(this).closest("form").find("select[name^='division']");
+        if (cat_id == '') {
+          divisionSelect.empty();
+        }
+        else {
+          $.ajax({
+            data : { 'cat_id' : cat_id},
+            url : '/traer-divisiones/',
+            type : 'get',
+            async: true,
+            success : function (data) {
+              var divisionValues = data;
+              divisionSelect.empty();
+              $(divisionValues).each(function() {
+                divisionSelect.append($("<option/>").attr('value',this.pk).text(this.fields.name));
+              });
+            }
+          });
+        }
       });
     </script>
 

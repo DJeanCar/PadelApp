@@ -22,7 +22,7 @@ class CrearTorneoForm(forms.ModelForm):
 	ClasificacionNivel = forms.ModelChoiceField(required=False, queryset=ClasificacionNivel.objects.all(),
 		widget = forms.Select(attrs = {
 				'class' : 'form-control',
-				'id' : 'categoryClassification',
+				'id' : 'ClasificacionNivel',
 				'required':'True'
 			}))
 
@@ -94,7 +94,7 @@ class CrearTorneoForm(forms.ModelForm):
 					'required':'True'
 				}),
 			'price' : forms.TextInput(attrs = {
-					'type' : 'number', 
+					'type' : 'number',
 					'class' : 'form-control',
 					'id' : 'price',
 					'pattern' : '[0-9]+([\.|,][0-9]+)?',
