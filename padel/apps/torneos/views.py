@@ -4,7 +4,7 @@ from django.views.generic import FormView, TemplateView, DetailView
 from django.core.urlresolvers import reverse_lazy
 from braces.views import LoginRequiredMixin
 
-from apps.users.models import Player
+from apps.users.models import Player, User
 from .models import TipoCompeticion, ClasificacionCategoria_Categoria, DatosTipoCompeticion,ClasificacionNivel, Nivel, Competicion, Categoria, ClasificacionCategoria,Division, TipoInscripcion
 from .forms import CrearTorneoForm
 
@@ -67,7 +67,7 @@ class CreateTorneoView(LoginRequiredMixin, FormView):
 			########################
 			competicion = Competicion.objects.create(
 					categoria = clasificacionCategoria,
-					admin = Player.objects.get(user = self.request.user),
+					admin = User.objects.get(username = self.request.user),
 					tipoCompeticion = form.cleaned_data['tournamentType'],
 					tipoInscripcion = form.cleaned_data['tipoInscripcion'],
 					clasificacionNivel = clasificacionNivel,
@@ -210,6 +210,11 @@ class CreateTorneoView(LoginRequiredMixin, FormView):
 	def form_invalid(self, form):
 		return super(CreateTorneoView, self).form_invalid(form)
 
+	def get_initial(self):
+		initial = super(CreateTorneoView, self).get_initial()
+		initial['categoryClassification'] = ClasificacionCategoria.objects.all()
+		return initial
+
 def crear_division(request):
 	if request.is_ajax():
 		divisiones = ClasificacionCategoria_Categoria.objects.values('category__name').filter(clas_cat__id = request.GET['id']).order_by('orden')
@@ -333,6 +338,8 @@ class EditarTorneoView(DetailView):
 					user = self.request.user,
 					name = self.request.POST['categoryClassificationName']
 				)
+			competicion.categoria = clasificacionCategoria
+			competicion.save()
 			for i in range(1,10):
 				if "categoryName_%s" % i in self.request.POST:
 					try:
@@ -344,6 +351,7 @@ class EditarTorneoView(DetailView):
 							category = categoria,
 							orden = i
 						)
+
 				else:
 					break
 		########################

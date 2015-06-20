@@ -5,6 +5,7 @@ from .models import Competicion, TipoCompeticion, ClasificacionCategoria, Clasif
 
 class CrearTorneoForm(forms.ModelForm):
 
+
 	tournamentType = forms.ModelChoiceField(queryset=TipoCompeticion.objects.all(), to_field_name="slug",
 		widget = forms.Select(attrs = {
 				'class' : 'form-control',

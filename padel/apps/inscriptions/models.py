@@ -21,7 +21,7 @@ class Equipo(models.Model):
 	hora_juego = models.CharField(max_length=5, null = True)
 
 	def __unicode__(self):
-		return self.competicion.name
+		return "%s" % (self.jugadores.all())
 
 
 class JugadorxEquipo(models.Model):

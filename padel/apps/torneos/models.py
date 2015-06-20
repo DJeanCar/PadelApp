@@ -84,7 +84,7 @@ class Competicion(models.Model):
 		Logo y precio ( agregar ), permitir_nivel, permitir_division
 	"""
 	categoria = models.ForeignKey(ClasificacionCategoria)
-	admin = models.ForeignKey(Player) # administrador del torneo
+	admin = models.ForeignKey(User) 
 	tipoCompeticion = models.ForeignKey(TipoCompeticion) # tipo de competicion
 	tipoInscripcion = models.ForeignKey(TipoInscripcion)
 	clasificacionNivel = models.ForeignKey(ClasificacionNivel)

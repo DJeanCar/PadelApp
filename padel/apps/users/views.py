@@ -33,9 +33,10 @@ class LoginView(FormView):
 				# usuario.save()
 				# enviar_email_acceso(usuario.username,password,usuario.email) Falta el Email
 				mensaje = "Hemos enviado tus datos de acceso a  %s" % request.POST['email_recuperar']
+				form = LoginForm()
 			except:
 				mensaje = "Email %s no registrado" & request.POST['email_recuperar']
-			return render(request,'users/login.html',{'mensaje' : mensaje})
+			return render(request,'users/login.html',{'mensaje' : mensaje, 'form' : form})
 		else:
 			Login(request, request.POST['email'], request.POST['password'])
 		return super(LoginView, self).post(request, *args, **kwargs)

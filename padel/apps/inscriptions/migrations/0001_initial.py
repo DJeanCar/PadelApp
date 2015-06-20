@@ -7,8 +7,8 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('users', '0003_auto_20150503_0443'),
-        ('torneos', '0008_auto_20150422_0403'),
+        ('users', '0001_initial'),
+        ('torneos', '0001_initial'),
     ]
 
     operations = [
@@ -18,7 +18,6 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('descripcion', models.CharField(max_length=50)),
                 ('preferencia_horaria', models.TextField(max_length=50, null=True, blank=True)),
-                ('nivel', models.IntegerField(null=True, blank=True)),
                 ('pagado', models.BooleanField(default=False)),
                 ('timpestamp', models.DateField(auto_now_add=True)),
                 ('activo', models.BooleanField(default=False)),
@@ -43,7 +42,7 @@ class Migration(migrations.Migration):
                 ('activo', models.BooleanField(default=b'False')),
                 ('lesionado', models.BooleanField(default=False)),
                 ('timpestamp', models.DateTimeField(auto_now=True)),
-                ('equipo', models.ForeignKey(related_name='Equipo(JugadorxEquipo)', to='inscriptions.Equipo')),
+                ('equipo', models.ForeignKey(to='inscriptions.Equipo')),
                 ('jugador', models.ForeignKey(to='users.Player')),
             ],
             options={
@@ -54,6 +53,12 @@ class Migration(migrations.Migration):
             model_name='equipo',
             name='jugadores',
             field=models.ManyToManyField(to='users.Player', through='inscriptions.JugadorxEquipo'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='equipo',
+            name='nivel',
+            field=models.ForeignKey(blank=True, to='torneos.Nivel', null=True),
             preserve_default=True,
         ),
     ]
